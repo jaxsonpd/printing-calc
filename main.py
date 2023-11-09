@@ -6,16 +6,54 @@
 import tkinter as tk
 from tkinter import ttk
 
+import equation
+
+## @class App
+# @brief The main application class
 class App(tk.Frame):
+    ## @brief The constructor for the App class
+    # @param self The object pointer
+    # @param master The master widget to place the application in
     def __init__(self, master=None):
         super().__init__(master)
 
+        self.setup_window()
+
+        self.setup_menuBar()
+
+        # Set up the master grid
+        self.master.rowconfigure(0, weight=1)
+        self.master.columnconfigure(0, weight=1)
+
+        self.setup_history()
+
+        self.create_equation_entry()
+
+        # Add some equations to the history
+        self.equations = []
+        self.equations.append(equation.Equation("2+2"))
+        self.equations.append(equation.Equation("2+3"))
+        self.equations.append(equation.Equation("2+4"))
+        self.equations.append(equation.Equation("2+5"))
+        self.equations.append(equation.Equation("2+6"))
+
+        # Create the equations in the history
+        for i in range(len(self.equations)):
+            self.equations[i].create_equation(self.frm_history, i)
+
+
+    ## @brief Create the main window
+    # @param self The object pointer
+    def setup_window(self):
         # Set up the window
-        self.master.title("Printing Calculator")
+        self.master.title("Printing Calculator - Jack Duignan")
 
-        self.master.maxsize(750, 500)
         self.master.minsize(500, 250)
+        self.master.geometry("500x250")
 
+    ## @brief Create the menu bar
+    # @param self The object pointer
+    def setup_menuBar(self):
         # Create the menu bar
         menuBar = tk.Menu(self.master)
 
@@ -28,56 +66,19 @@ class App(tk.Frame):
         menuBar.add_cascade(label="File", menu=filemenu)
         self.master.configure(menu=menuBar)
 
-        # Set up the master grid
-        self.master.rowconfigure(0, weight=1)
-        self.master.columnconfigure(0, weight=1)
-
-
+    ## @brief Setup the history frame
+    # @param self The object pointer
+    def setup_history(self):
         # Create the history frame
         self.frm_history = tk.Frame(self.master)
         self.frm_history.columnconfigure(0, weight=1)
         self.frm_history.grid(row=0, column=0, sticky="nsew")
+        self.frm_history.rowconfigure(0, weight=1)
 
-        # Create the history widgets
-        self.frm_result = tk.Frame(self.frm_history, background="blue") # A frame to hold a result
-        self.frm_result.columnconfigure(0, weight=1)
-        self.frm_result.grid(row=0, column=0, sticky="new")
-
-        self.lbl_result_equation = tk.Label(self.frm_result, text="2+2", height=1, width=10, anchor="w")
-        self.lbl_result_equation.grid(row=0, column=0, sticky="new")
-        self.lbl_result_answer = tk.Label(self.frm_result, text="4", height=1, width=10, anchor="w")
-        self.lbl_result_answer.grid(row=1, column=0, sticky="new")
-        
-        self.btn_result_delete = tk.Button(self.frm_result, text="x", height=1, width=1)
-        self.btn_result_delete.grid(row=0, column=1, rowspan=2, padx=10)
-
-
-        self.frm_result2 = tk.Frame(self.frm_history, background="red") # A frame to hold a result
-        self.frm_result2.columnconfigure(0, weight=1)
-        self.frm_result2.grid(row=1, column=0, sticky="new")
-
-        self.lbl_result_equation2 = tk.Label(self.frm_result2, text="2+3", height=1, width=10, anchor="w")
-        self.lbl_result_equation2.grid(row=0, column=0, sticky="new")
-        self.lbl_result_answer2 = tk.Label(self.frm_result2, text="5", height=1, width=10, anchor="w")
-        self.lbl_result_answer2.grid(row=1, column=0, sticky="new")
-        
-        self.btn_result_delete2 = tk.Button(self.frm_result2, text="x", height=1, width=1)
-        self.btn_result_delete2.grid(row=0, column=1, rowspan=2, padx=10)
-
-
-        self.frm_result3 = tk.Frame(self.frm_history, background="yellow") # A frame to hold a result
-        self.frm_result3.columnconfigure(0, weight=1)
-        self.frm_result3.grid(row=2, column=0, sticky="new")
-
-        self.lbl_result_equation3 = tk.Label(self.frm_result3, text="2+4", height=1, width=10, anchor="w")
-        self.lbl_result_equation3.grid(row=0, column=0, sticky="new")
-        self.lbl_result_answer3 = tk.Label(self.frm_result3, text="6", height=1, width=10, anchor="w")
-        self.lbl_result_answer3.grid(row=1, column=0, sticky="new")
-        
-        self.btn_result_delete3 = tk.Button(self.frm_result3, text="x", height=1, width=1)
-        self.btn_result_delete3.grid(row=0, column=1, rowspan=2, padx=10)
-
-        # Create the equation frame
+    ## @brief Create the equation entry widget
+    # @param self The object pointer
+    def create_equation_entry(self):
+        # Create the equation frame  
         self.frm_equation = tk.Frame(self.master)
         self.frm_equation.rowconfigure(0, weight=1)
         self.frm_equation.columnconfigure(0, weight=1)
@@ -86,7 +87,9 @@ class App(tk.Frame):
 
         # Create the equation widgets
         self.ent_equation = tk.Entry(self.frm_equation)
+        self.ent_equation.bind("<Return>", self.add_equation)
         self.ent_equation.grid(row=0, column=0, sticky="nsew")
+
 
 
 
