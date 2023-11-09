@@ -6,7 +6,7 @@
 import tkinter as tk
 from tkinter import ttk
 
-import equation
+from equation import Equation
 
 ## @class App
 # @brief The main application class
@@ -29,17 +29,19 @@ class App(tk.Frame):
 
         self.create_equation_entry()
 
-        # Add some equations to the history
-        self.equations = []
-        self.equations.append(equation.Equation("2+2"))
-        self.equations.append(equation.Equation("2+3"))
-        self.equations.append(equation.Equation("2+4"))
-        self.equations.append(equation.Equation("2+5"))
-        self.equations.append(equation.Equation("2+6"))
+        self.num_equations = 0
 
-        # Create the equations in the history
-        for i in range(len(self.equations)):
-            self.equations[i].create_equation(self.frm_history, i)
+        # # Add some equations to the history
+        # self.equations = []
+        # self.equations.append(Equation("2+2"))
+        # self.equations.append(Equation("2+3"))
+        # self.equations.append(Equation("2+4"))
+        # self.equations.append(Equation("2+5"))
+        # self.equations.append(Equation("2+6"))
+
+        # # Create the equations in the history
+        # for i in range(len(self.equations)):
+        #     self.equations[i].create_equation(self.frm_history, i)
 
 
     ## @brief Create the main window
@@ -89,6 +91,15 @@ class App(tk.Frame):
         self.ent_equation = tk.Entry(self.frm_equation)
         self.ent_equation.bind("<Return>", self.add_equation)
         self.ent_equation.grid(row=0, column=0, sticky="nsew")
+
+    ## @brief Add an equation to the history
+    # @param self The object pointer
+    # @param event The event object
+    def add_equation(self, event):
+        equation = Equation(self.ent_equation.get())
+        self.ent_equation.delete(0, tk.END)
+        equation.create_equation(self.frm_history, self.num_equations)
+        self.num_equations += 1
 
 
 
