@@ -29,19 +29,19 @@ class App(tk.Frame):
 
         self.create_equation_entry()
 
-        self.num_equations = 0
+        self.equations = []
 
-        # # Add some equations to the history
-        # self.equations = []
-        # self.equations.append(Equation("2+2"))
-        # self.equations.append(Equation("2+3"))
-        # self.equations.append(Equation("2+4"))
-        # self.equations.append(Equation("2+5"))
-        # self.equations.append(Equation("2+6"))
 
-        # # Create the equations in the history
-        # for i in range(len(self.equations)):
-        #     self.equations[i].create_equation(self.frm_history, i)
+        # Add some equations to the history
+        self.equations.append(Equation("2+2"))
+        self.equations.append(Equation("2+3"))
+        self.equations.append(Equation("2+4"))
+        self.equations.append(Equation("2+5"))
+        self.equations.append(Equation("2+6"))
+
+        # Create the equations in the history
+        for i in range(len(self.equations)):
+            self.equations[i].create_equation(self.frm_history, i, self.delete_equation)
 
 
     ## @brief Create the main window
@@ -92,17 +92,29 @@ class App(tk.Frame):
         self.ent_equation.bind("<Return>", self.add_equation)
         self.ent_equation.grid(row=0, column=0, sticky="nsew")
 
-    ## @brief Add an equation to the history
+    ## @brief Add an equation to the history used by the equation entry
     # @param self The object pointer
     # @param event The event object
     def add_equation(self, event):
         equation = Equation(self.ent_equation.get())
         self.ent_equation.delete(0, tk.END)
-        equation.create_equation(self.frm_history, self.num_equations)
-        self.num_equations += 1
+        equation.create_equation(self.frm_history, len(self.equations), self.delete_equation)
+        self.equations.append(equation)
+        self.print_equations()
 
-
-
+    ## @brief Delete an equation from the history
+    # @param self The object pointer
+    # @param equation The equation object to delete
+    def delete_equation(self, equation: Equation):
+        self.equations.remove(equation)
+        self.print_equations()
+        
+    ## @brief print the equations in the history
+    # @param self The object pointer
+    def print_equations(self):
+        print("---")
+        for equation in self.equations:
+            print(equation)
 
 myapp = App()
 
