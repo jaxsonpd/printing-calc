@@ -47,7 +47,8 @@ class Equation():
     def delete_equation(self, event: tk.Event = None):
         self.frm_equation.destroy() # Remove the equation from the GUI
         
-        self.deleteFunction(self) # Remove the equation from the list
+        if self.deleteFunction != None:
+            self.deleteFunction(self) # Remove the equation from the list
 
     ## @brief Creates the equation in the GUI
     # @param self The object pointer
@@ -56,7 +57,7 @@ class Equation():
     # @param deleteFunction The function to call when an equation is deleted (To remove the equation from the list)
     # @param column The column to place the equation in default=0
     # @param sticky The sticky value for the equation default="sew" (bottom)
-    def create_equation(self, master: tk.Widget, row: int, deleteFunction: None, column: int = 0, sticky: str = "sew"):
+    def create_equation(self, master: tk.Widget, row: int, deleteFunction = None, column: int = 0, sticky: str = "sew"):
         # Create the equation frame
         self.frm_equation = tk.Frame(master)
         self.frm_equation.columnconfigure(0, weight=1)
@@ -76,9 +77,9 @@ class Equation():
 
 if __name__ == "__main__":
     equation1 = Equation("2+2")
-    print(equation1.result) # 4
+    print(equation1)
     equation1.update_equation("2+3")
-    print(equation1.result) # 5
+    print(equation1)
 
     equation1.create_equation(tk.Tk(), 0)
     tk.mainloop() # 2+3 \n =5
