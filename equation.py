@@ -62,12 +62,12 @@ class Equation():
         self.frm_equation.columnconfigure(0, weight=1)
         self.frm_equation.grid(row=row, column=column, sticky=sticky)
 
-        self.lbl_equation = tk.Label(self.frm_equation, text=self.equation_str, height=1, width=10, anchor="w")
+        self.lbl_equation = ttk.Label(self.frm_equation, text=self.equation_str, anchor="w")
         self.lbl_equation.grid(row=0, column=0, sticky="new")
-        self.lbl_answer = tk.Label(self.frm_equation, text="="+str(self.result), height=1, width=10, anchor="w")
+        self.lbl_answer = ttk.Label(self.frm_equation, text="="+str(self.result), anchor="w")
         self.lbl_answer.grid(row=1, column=0, sticky="new")
         
-        self.btn_delete = tk.Button(self.frm_equation, text="x", height=1, width=1, command=self.delete_equation)
+        self.btn_delete = ttk.Button(self.frm_equation, text="x", width=2, command=self.delete_equation)
         self.btn_delete.grid(row=0, column=1, rowspan=2, padx=10)
 
         # Set the delete function
