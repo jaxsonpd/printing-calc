@@ -35,27 +35,29 @@ class EquationEntry(tk.Frame):
     ## @brief The constructor for the EquationEntry class
     # @param self The object pointer
     # @param master The master widget to place the equation entry in
-    def __init__(self, master: tk.Widget = None):
+    # @param row The row to place the equation entry in
+    def __init__(self, master: tk.Widget = None, row: int = 1, add_equation_function = None):
         super().__init__(master)
 
         # Create the equation frame  
         self.rowconfigure(0, weight=1)
         self.columnconfigure(0, weight=1)
 
-        self.grid(row=1, column=0, sticky="nsew")
+        self.grid(row=row, column=0, sticky="nsew")
+        self.add_equation_function = add_equation_function
 
         # Create the equation widgets
         self.ent_equation = ttk.Entry(self)
         self.ent_equation.bind("<Return>", self.add_equation)
         self.ent_equation.grid(row=0, column=0, sticky="nsew")
 
-        self.bind("<Return>", self.add_equation)
 
     ## @brief Add an equation to the history used by the equation entry
     # @param self The object pointer
     # @param event The event object
     def add_equation(self, event):
-        pass
+        if self.add_equation_function != None:
+            self.add_equation_function(event)
 
 ## @class History
 # @brief The history class
@@ -63,46 +65,19 @@ class History(tk.Frame):
     ## @brief The constructor for the History class
     # @param self The object pointer
     # @param master The master widget to place the history in
-    def __init__(self, master: tk.Widget = None):
+    def __init__(self, master: tk.Widget = None, row: int = 0):
         super().__init__(master)
 
         # Create the history frame
         self.rowconfigure(0, weight=1)
         self.columnconfigure(0, weight=1)
 
-        self.grid(row=0, column=0, sticky="nsew")
+        self.grid(row=row, column=0, sticky="nsew")
 
         # Create the history widgets
         self.columnconfigure(0, weight=1)
         self.grid(row=0, column=0, sticky="nsew")
         self.rowconfigure(0, weight=1)
-
-        self.equations = []
-
-        # Add some equations to the history
-        self.equations.append(Equation("2+2"))
-        self.equations.append(Equation("2+3"))
-        self.equations.append(Equation("2+4"))
-        self.equations.append(Equation("2+5"))
-        self.equations.append(Equation("2+6"))
-
-        # Create the equations in the history
-        for i in range(len(self.equations)):
-            self.equations[i].create_equation(self, i, self.delete_equation)
-
-    ## @brief Delete an equation from the history
-    # @param self The object pointer
-    # @param equation The equation object to delete
-    def delete_equation(self, equation: Equation):
-        self.equations.remove(equation)
-        self.print_equations()
-        
-    ## @brief print the equations in the history
-    # @param self The object pointer
-    def print_equations(self):
-        print("---")
-        for equation in self.equations:
-            print(equation)
         
 
 ## @class App
@@ -114,7 +89,7 @@ class App(tk.Frame):
     def __init__(self, master=None):
         super().__init__(master)
 
-        self.setup_window()
+        self.__setup_window()
 
         # Set up the master grid
         self.master.rowconfigure(0, weight=1)
@@ -124,19 +99,46 @@ class App(tk.Frame):
         self.menu_bar = MenuBar(self.master)
 
         # Create the equation entry
-        self.equation_entry = EquationEntry(self.master)
+        self.equation_entry = EquationEntry(self.master, add_equation_function=self.add_equation)
 
         # Create the history
         self.history = History(self.master)
 
+        self.equations = [] # The list of equations currently being stored in the history window
+
+        self.equations.append(Equation("1+1"))
+        self.equations.append(Equation("2+2"))
+        self.equations.append(Equation("3+3"))
+
+        for i in range(len(self.equations)):
+            self.equations[i].create_equation(self.history, i, deleteFunction=self.remove_equation)
+
+    ## @brief Add an equation to the history
+    # @param self The object pointer
+    # @param event The event object
+    def add_equation(self, event):
+        equation = Equation(self.equation_entry.ent_equation.get())
+        self.equation_entry.ent_equation.delete(0, tk.END)
+        equation.create_equation(self.history, len(self.equations))
+        self.equations.append(equation)
+
+    ## @brief Remove an equation from the history
+    # @param self The object pointer
+    # @param equation The equation to remove
+    def remove_equation(self, equation: Equation):
+        self.equations.remove(equation)
+        print(equation)
+
     ## @brief Create the main window
     # @param self The object pointer
-    def setup_window(self):
+    def __setup_window(self):
         # Set up the window
         self.master.title("Printing Calculator - Jack Duignan")
 
         self.master.minsize(500, 250)
         self.master.geometry("500x250")
+
+    
 
 myapp = App()
 
