@@ -32,6 +32,8 @@ class ScrollableFrame(ttk.Frame):
         # Create the frame
         self.frame = ttk.Frame(self.canvas)
 
+    def return_frame(self):
+        return self.frame
 
 if __name__ == "__main__":
     root = tk.Tk()
