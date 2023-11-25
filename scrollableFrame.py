@@ -34,6 +34,7 @@ class ScrollableFrame(ttk.Frame):
 
         self.canvas.pack(fill='both', expand=True, side='left')
         self.scrollbar.pack(fill='y', side='right')
+        self.frame.pack(fill='both', expand=True)
 
     def return_frame(self):
         return self.frame
