@@ -63,35 +63,27 @@ class EquationEntry(tk.Frame):
 
 ## @class History
 # @brief The history class
-class History(ScrollableFrame):
+class History():
     ## @brief The constructor for the History class
     # @param self The object pointer
     # @param master The master widget to place the history in
-    def __init__(self, master: tk.Widget = None, row: int = 0):
-        super().__init__(master)
+    def __init__(self, master: ttk.Widget = None, row: int = 0):
+        self.scrollableFrame = ScrollableFrame(master) 
+        self.scrollableFrame.grid(row=row, column=0, sticky="nsew")
 
-        self.grid(row=row, column=0, sticky="nsew")
-        self.frame = super().return_frame()
-
-        # # Create the history frame
-        # super().return_frame().rowconfigure(0, weight=1)
-        # super().return_frame().columnconfigure(0, weight=1)
-
-    def __call__(self, *args: Any, **kwds: Any) -> Any:
-        return super().return_frame()
+        self.scrollableFrame.frame.rowconfigure(0, weight=1)
+        self.scrollableFrame.frame.columnconfigure(0, weight=1)
 
 
 
 ## @class App
 # @brief The main application class
-class App(tk.Frame):
+class App(ttk.Frame):
     ## @brief The constructor for the App class
     # @param self The object pointer
     # @param master The master widget to place the application in
     def __init__(self, master=None):
         super().__init__(master)
-
-        self.__setup_window()
 
         # Set up the master grid
         self.master.rowconfigure(0, weight=1)
@@ -101,10 +93,10 @@ class App(tk.Frame):
         self.menu_bar = MenuBar(self.master)
 
         # Create the equation entry
-        self.equation_entry = EquationEntry(self, add_equation_function=self.add_equation)
+        self.equation_entry = EquationEntry(self.master, add_equation_function=self.add_equation)
 
         # Create the history
-        self.history = History(self)
+        self.history = History(self.master)
         
 
         self.equations = [] # The list of equations currently being stored in the history window
@@ -115,7 +107,7 @@ class App(tk.Frame):
         self.equations.append(Equation("3+3"))
 
         for i in range(len(self.equations)):
-            self.equations[i].create_equation(self.history.frame, i, deleteFunction=self.remove_equation)
+            self.equations[i].create_equation(self.history.scrollableFrame.frame, i, deleteFunction=self.remove_equation)
 
     ## @brief Add an equation to the history
     # @param self The object pointer
@@ -123,7 +115,7 @@ class App(tk.Frame):
     def add_equation(self, event):
         equation = Equation(self.equation_entry.ent_equation.get())
         self.equation_entry.ent_equation.delete(0, tk.END)
-        equation.create_equation(self.history, len(self.equations), deleteFunction=self.remove_equation)
+        equation.create_equation(self.history.scrollableFrame.frame, len(self.equations), deleteFunction=self.remove_equation)
         self.equations.append(equation)
 
     ## @brief Remove an equation from the history
@@ -143,8 +135,11 @@ class App(tk.Frame):
         self.master.geometry("500x250")
 
 
+root = tk.Tk()
+root.rowconfigure(0, weight=1)
+root.columnconfigure(0, weight=1)
 
-myapp = App()
+myapp = App(root)
 
 # start the program
 myapp.mainloop()

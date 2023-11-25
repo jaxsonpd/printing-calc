@@ -20,17 +20,20 @@ class ScrollableFrame(ttk.Frame):
 
         # Create the canvas
         self.canvas = tk.Canvas(self)
-        self.canvas.grid(row=0, column=0, sticky="nsew")
 
         # Create the scroll bar
         self.scrollbar = ttk.Scrollbar(self, orient="vertical", command=self.canvas.yview)
-        self.scrollbar.grid(row=0, column=1, sticky="ns")
 
         # Configure the canvas
         self.canvas.configure(yscrollcommand=self.scrollbar.set)
 
         # Create the frame
         self.frame = ttk.Frame(self.canvas)
+        self.canvas.create_window(0, 0, anchor='nw', window=self.frame)
+        self.frame.bind("<Configure>", lambda event: self.canvas.configure(scrollregion=self.canvas.bbox("all")))
+
+        self.canvas.pack(fill='both', expand=True, side='left')
+        self.scrollbar.pack(fill='y', side='right')
 
     def return_frame(self):
         return self.frame
@@ -47,10 +50,6 @@ if __name__ == "__main__":
     # Create the widgets
     for i in range(50):
         ttk.Label(scrollable_frame.frame, text=f"Label {i}").grid(row=i, column=0)
-
-    # Configure the scrollable frame
-    scrollable_frame.canvas.create_window((0, 0), window=scrollable_frame.frame, anchor="nw")
-    scrollable_frame.frame.bind("<Configure>", lambda event: scrollable_frame.canvas.configure(scrollregion=scrollable_frame.canvas.bbox("all")))
 
     root.mainloop()
 
