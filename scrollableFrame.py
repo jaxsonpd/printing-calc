@@ -43,8 +43,6 @@ class ScrollableFrame():
         if self.interior.winfo_reqwidth() != self.interior.winfo_reqheight():
             # Update the inner frames width to fill the canvas
             self.canvas.itemconfigure(self.interior_id, width=self.canvas.winfo_width())
-            
-    
 
     def _update_scroll_region(self, event) -> None:
         # update scrollbar to match the size of the inner frame

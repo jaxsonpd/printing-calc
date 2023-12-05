@@ -69,21 +69,21 @@ class History():
     # @param master The master widget to place the history in
     def __init__(self, master: ttk.Widget = None, row: int = 0):
         self.scrollableFrame = ScrollableFrame(master) 
-        self.scrollableFrame.grid(row=row, column=0, sticky="nsew")
+        self.scrollableFrame.outer.grid(row=row, column=0, sticky="nsew")
 
-        self.scrollableFrame.frame.rowconfigure(0, weight=1)
-        self.scrollableFrame.frame.columnconfigure(0, weight=1)
+        self.scrollableFrame.interior.rowconfigure(0, weight=1)
+        self.scrollableFrame.interior.columnconfigure(0, weight=1)
+        self.scrollableFrame.interior.grid(row=0, column=0, sticky="nsew")
 
 
 
 ## @class App
 # @brief The main application class
-class App(ttk.Frame):
+class App(tk.Tk):
     ## @brief The constructor for the App class
     # @param self The object pointer
-    # @param master The master widget to place the application in
-    def __init__(self, master=None):
-        super().__init__(master)
+    def __init__(self):
+        self.master = super().__init__()
 
         # Set up the master grid
         self.master.rowconfigure(0, weight=1)
@@ -107,15 +107,20 @@ class App(ttk.Frame):
         self.equations.append(Equation("3+3"))
 
         for i in range(len(self.equations)):
-            self.equations[i].create_equation(self.history.scrollableFrame.frame, i, deleteFunction=self.remove_equation)
+            self.equations[i].create_equation(self.history.scrollableFrame.interior, i, deleteFunction=self.remove_equation)
 
     ## @brief Add an equation to the history
     # @param self The object pointer
     # @param event The event object
     def add_equation(self, event):
+        # Create new Equation and clear entry
         equation = Equation(self.equation_entry.ent_equation.get())
         self.equation_entry.ent_equation.delete(0, tk.END)
-        equation.create_equation(self.history.scrollableFrame.frame, len(self.equations), deleteFunction=self.remove_equation)
+
+        # Add created equation to the gui
+        equation.create_equation(self.history.scrollableFrame.interior, len(self.equations), deleteFunction=self.remove_equation)
+        self.history.scrollableFrame._resize_interior(None)
+        self.history.scrollableFrame._update_scroll_region(None)
         self.equations.append(equation)
 
     ## @brief Remove an equation from the history
@@ -135,11 +140,7 @@ class App(ttk.Frame):
         self.master.geometry("500x250")
 
 
-root = tk.Tk()
-root.rowconfigure(0, weight=1)
-root.columnconfigure(0, weight=1)
-
-myapp = App(root)
+myapp = App()
 
 # start the program
 myapp.mainloop()
