@@ -10,25 +10,43 @@ from typing import Any
 from scrollableFrame import ScrollableFrame
 from equation import Equation
 
+# ## @class MenuBar
+# # @brief The menu bar class
+# class MenuBar(tk.Menu):
+#     ## @brief The constructor for the MenuBar class
+#     # @param self The object pointer
+#     # @param master The master widget to place the menu bar in
+#     def __init__(self, master: tk.Widget = None):
+#         super().__init__(master)
+
+#         # File menu
+#         filemenu = tk.Menu(self, tearoff=0)
+#         filemenu.add_separator()
+#         filemenu.add_command(label="Exit", command=self.master.quit)
+
+#         # Add menus to the menu bar
+#         self.add_cascade(label="File", menu=filemenu)
+
+#         # Add the menu bar to the master
+#         self.master.config(menu=self)
+
 ## @class MenuBar
 # @brief The menu bar class
-class MenuBar(tk.Menu):
+class MenuBar:
     ## @brief The constructor for the MenuBar class
     # @param self The object pointer
     # @param master The master widget to place the menu bar in
     def __init__(self, master: tk.Widget = None):
-        super().__init__(master)
+        self.master = master
+        self.menu = tk.Menu(self.master)
 
         # File menu
-        filemenu = tk.Menu(self, tearoff=0)
-        filemenu.add_separator()
-        filemenu.add_command(label="Exit", command=self.master.quit)
+        self.filemenu = tk.Menu(self.menu, tearoff=0)
+        self.filemenu.add_separator()
+        self.filemenu.add_command(label="Exit", command=self.master.quit)
 
         # Add menus to the menu bar
-        self.add_cascade(label="File", menu=filemenu)
-
-        # Add the menu bar to the master
-        self.master.config(menu=self)
+        self.master.config(menu=self.menu)
 
 
 ## @class EquationEntry
