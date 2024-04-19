@@ -7,8 +7,8 @@ import tkinter as tk
 from tkinter import ttk
 from typing import Any
 
-from scrollableFrame import ScrollableFrame
-from equation import Equation
+from src.scrollableFrame import ScrollableFrame
+from Equation import Equation
 
 # ## @class MenuBar
 # # @brief The menu bar class
