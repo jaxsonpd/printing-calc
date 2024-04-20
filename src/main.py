@@ -69,6 +69,8 @@ class App(tk.Tk):
         self.rowconfigure(0, weight=1)
         self.columnconfigure(0, weight=1)
 
+        self.__setup_window()
+
         # Create the menu bar
         self.menu_bar = MenuBar(self)
 
@@ -114,10 +116,10 @@ class App(tk.Tk):
     # @param self The object pointer
     def __setup_window(self):
         # Set up the window
-        self.master.title("Printing Calculator - Jack Duignan")
+        self.title("Printing Calculator - Jack Duignan")
 
-        self.master.minsize(500, 250)
-        self.master.geometry("500x250")
+        self.minsize(500, 250)
+        self.geometry("500x250")
 
 
 myapp = App()
