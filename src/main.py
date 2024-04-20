@@ -7,47 +7,9 @@ import tkinter as tk
 from tkinter import ttk
 from typing import Any
 
-from src.scrollableFrame import ScrollableFrame
+from scrollableFrame import ScrollableFrame
 from Equation import Equation
-
-# ## @class MenuBar
-# # @brief The menu bar class
-# class MenuBar(tk.Menu):
-#     ## @brief The constructor for the MenuBar class
-#     # @param self The object pointer
-#     # @param master The master widget to place the menu bar in
-#     def __init__(self, master: tk.Widget = None):
-#         super().__init__(master)
-
-#         # File menu
-#         filemenu = tk.Menu(self, tearoff=0)
-#         filemenu.add_separator()
-#         filemenu.add_command(label="Exit", command=self.master.quit)
-
-#         # Add menus to the menu bar
-#         self.add_cascade(label="File", menu=filemenu)
-
-#         # Add the menu bar to the master
-#         self.master.config(menu=self)
-
-## @class MenuBar
-# @brief The menu bar class
-class MenuBar:
-    ## @brief The constructor for the MenuBar class
-    # @param self The object pointer
-    # @param master The master widget to place the menu bar in
-    def __init__(self, master: tk.Widget = None):
-        self.master = master
-        self.menu = tk.Menu(self.master)
-
-        # File menu
-        self.filemenu = tk.Menu(self.menu, tearoff=0)
-        self.filemenu.add_separator()
-        self.filemenu.add_command(label="Exit", command=self.master.quit)
-
-        # Add menus to the menu bar
-        self.master.config(menu=self.menu)
-
+from History import MenuBar
 
 ## @class EquationEntry
 # @brief The equation entry class
@@ -101,20 +63,20 @@ class App(tk.Tk):
     ## @brief The constructor for the App class
     # @param self The object pointer
     def __init__(self):
-        self.master = super().__init__()
+        super().__init__()
 
         # Set up the master grid
-        self.master.rowconfigure(0, weight=1)
-        self.master.columnconfigure(0, weight=1)
+        self.rowconfigure(0, weight=1)
+        self.columnconfigure(0, weight=1)
 
         # Create the menu bar
-        self.menu_bar = MenuBar(self.master)
+        self.menu_bar = MenuBar(self)
 
         # Create the equation entry
-        self.equation_entry = EquationEntry(self.master, add_equation_function=self.add_equation)
+        self.equation_entry = EquationEntry(self, add_equation_function=self.add_equation)
 
         # Create the history
-        self.history = History(self.master)
+        self.history = History(self)
         
 
         self.equations = [] # The list of equations currently being stored in the history window
