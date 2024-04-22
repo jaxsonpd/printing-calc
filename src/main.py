@@ -5,11 +5,10 @@
 
 import tkinter as tk
 from tkinter import ttk
-from typing import Any
 
 from scrollableFrame import ScrollableFrame
 from Equation import Equation
-from History import MenuBar
+from Menubar import MenuBar
 
 ## @class EquationEntry
 # @brief The equation entry class

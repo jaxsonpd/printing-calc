@@ -5,6 +5,7 @@
 
 import tkinter as tk
 
+
 class MenuBar:
     """
     Menu bar class which contains the formatting and functionality 
@@ -19,7 +20,7 @@ class MenuBar:
         self.master = master
         self.menu = tk.Menu(self.master)
 
-        self.__create_filemenu()
+        self.filemenu = self.__create_filemenu()
 
         # Add menus to the menu bar
         self.menu.add_cascade(label="File", menu=self.filemenu)
@@ -28,14 +29,19 @@ class MenuBar:
 
     def __create_filemenu(self) -> None:
         """ Create the file menu """
-        self.filemenu = tk.Menu(self.menu, tearoff=0)
+        filemenu = tk.Menu(self.menu, tearoff=0)
 
-        self.filemenu.add_command(label="New Window")
-        self.filemenu.add_separator()
-        self.filemenu.add_command(label="Save")
-        self.filemenu.add_command(label="Save as")
-        self.filemenu.add_separator()
-        self.filemenu.add_command(label="Preferences")
-        self.filemenu.add_separator()
-        self.filemenu.add_command(label="Clear")
-        self.filemenu.add_command(label="Exit", command=self.master.quit)
+        filemenu.add_command(label="New Window")
+        filemenu.add_separator()
+
+        filemenu.add_command(label="Save")
+        filemenu.add_command(label="Save as")
+        filemenu.add_separator()
+        
+        filemenu.add_command(label="Preferences")
+        filemenu.add_separator()
+        
+        filemenu.add_command(label="Clear")
+        filemenu.add_command(label="Exit", command=self.master.quit)
+
+        return filemenu
