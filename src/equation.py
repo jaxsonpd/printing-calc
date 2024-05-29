@@ -8,6 +8,9 @@ import tkinter as tk
 from tkinter import ttk
 from typing import Any
 
+## 
+# @brief The equation
+
 ## @class Equation
 # @brief Stores the equation and its result and contains modules to create the equation in the GUI
 class Equation():
@@ -23,14 +26,14 @@ class Equation():
     def __str__(self):
         return self.equation_str + " = " + str(self.result)
     
-        ## @brief Find the result of the equation
+    ## @brief Find the result of the equation
     # @param self The object pointer
     # @return The result of the equation None if the equation is invalid
     def __find_result(self):
         try:
             result = eval(self.equation_str)
         except:
-            result = None
+            result = "error"
         
         return result
     
