@@ -8,28 +8,48 @@ import tkinter as tk
 from tkinter import ttk
 from typing import Any
 
-## 
-# @brief The equation
-
-## @class Equation
-# @brief Stores the equation and its result and contains modules to create the equation in the GUI
 class Equation():
-    ## @brief The constructor for the Equation class
-    # @param self The object pointer
-    # @param equation The equation string to store
+    """
+    The equation class which stores the equation its result and contains
+    the functions to display it in the GUI.
+    """
     def __init__(self, equation: str):
+        """
+        Create an equation class
+
+        ### Params:
+        equation : str
+         The raw equation string
+
+        ### Variables:
+        equation_str : str
+         A string representation of the equation
+
+        result : float or str
+         The result of the equation
+        """
         self.equation_str = equation
         self.result = self.__find_result()
 
-    ## @brief Print the equation and its result in a readable format
-    # @param self The object pointer
     def __str__(self):
+        """
+        Return a string representation of the equation.
+
+        ### Returns:
+        out : str
+        The equation in string format
+        """
         return self.equation_str + " = " + str(self.result)
     
-    ## @brief Find the result of the equation
-    # @param self The object pointer
-    # @return The result of the equation None if the equation is invalid
     def __find_result(self):
+        """
+        Find the result of an equation (should call a parsing function)
+        but currently just uses the default python eval function.
+
+        ### Returns:
+        out : float or str
+         The result of the equation, error if cannot be calculated
+        """
         try:
             result = eval(self.equation_str)
         except:
@@ -37,30 +57,49 @@ class Equation():
         
         return result
     
-    ## @brief Update the equation in the class
-    # @param self The object pointer
-    # @param equation The new equation string
     def update_equation(self, equation: str):
+        """
+        Update the equation with new values essentially just a fancy
+        setter. Currently doesn't update the GUI.
+
+        ### Params:
+        equation : str
+         The new equation to update it with
+        """
         self.equation_str = equation
         self.result = self.__find_result()
     
-    ## @brief Delete the equation from the list
-    # @param self The object pointer
-    # @param event The event that called the function
     def delete_equation(self, event: tk.Event = None):
+        """
+        Remove the equation from the GUI and call the outer delete
+        function if provided. This is called from the delete button.
+
+        ### Params:
+        event : tk.Event
+         The event object used when called from the button press. 
+        """
         self.frm_equation.destroy() # Remove the equation from the GUI
         
-        if self.deleteFunction != None:
-            self.deleteFunction(self) # Remove the equation from the list
+        if self.delete_function != None:
+            self.delete_function(self) # Remove the equation from the list
 
-    ## @brief Creates the equation in the GUI
-    # @param self The object pointer
-    # @param master The master widget to place the equation in
-    # @param row The row to place the equation in
-    # @param deleteFunction The function to call when an equation is deleted (To remove the equation from the list)
-    # @param column The column to place the equation in default=0
-    # @param sticky The sticky value for the equation default="sew" (bottom)
-    def create_equation(self, master: tk.Widget, row: int, deleteFunction = None, column: int = 0, sticky: str = "sew"):
+    def create_equation(self, master: tk.Widget, row: int, delete_function = None, column: int = 0, sticky: str = "sew"):
+        """
+        Create the equation GUI object. Currently places itself I 
+        dont think that is the best way of doing it.
+
+        ### Params:
+        master : tk.Widget
+         The master widget for the equation.
+        row : int
+         The master widget row to place the equation in.
+        delete_function = None
+         The delete function to be called when the GUI object is destroyed.
+        column : int = 0
+         The column to place the equation in.
+        sticky : str = "sew"
+         The sticky for the equation.
+        """
         # Create the equation frame
         self.frm_equation = tk.Frame(master)
         self.frm_equation.columnconfigure(0, weight=1)
@@ -75,7 +114,7 @@ class Equation():
         self.btn_delete.grid(row=0, column=1, rowspan=2, padx=10)
 
         # Set the delete function
-        self.deleteFunction = deleteFunction
+        self.delete_function = delete_function
 
 
 if __name__ == "__main__":

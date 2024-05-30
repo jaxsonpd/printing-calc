@@ -1,4 +1,5 @@
-## @file main.py
+## 
+#  @file main.py
 #  @author Jack Duignan (JackpDuignan@gmail.com)
 #  @date 2024-05-28
 #  @brief The main file for the printing calculator project
@@ -11,29 +12,31 @@ from menu_bar import MenuBar
 from equation_entry import EquationEntry
 from history import History
 
-
-## @class App
-# @brief The main application class
-class App(tk.Tk):
-    ## @brief The constructor for the App class
-    # @param self The object pointer
+class App:
+    """
+    The main application class
+    """
     def __init__(self):
-        super().__init__()
+        """
+        Initialise a new GUI application 
+        """
+        self.app = tk.Tk()
 
         # Set up the master grid
-        self.rowconfigure(0, weight=1)
-        self.columnconfigure(0, weight=1)
+        self.app.rowconfigure(0, weight=1)
+        self.app.columnconfigure(0, weight=1)
 
         self.__setup_window()
 
         # Create the menu bar
-        self.menu_bar = MenuBar(self)
+        self.menu_bar = MenuBar(self.app)
 
         # Create the equation entry
-        self.equation_entry = EquationEntry(self, add_equation_function=self.add_equation)
+        self.equation_entry = EquationEntry(self.app, add_equation_function=self.add_equation)
 
         # Create the history
-        self.history = History(self)
+        self.history = History(self.app)
+        self.history.scrollableFrame.interior
         
 
         self.equations = [] # The list of equations currently being stored in the history window
@@ -46,10 +49,14 @@ class App(tk.Tk):
         for i in range(len(self.equations)):
             self.equations[i].create_equation(self.history.scrollableFrame.interior, i, deleteFunction=self.remove_equation)
 
-    ## @brief Add an equation to the history
-    # @param self The object pointer
-    # @param event The event object
     def add_equation(self, event):
+        """
+        Add a new equation to the history. Called by the equation entry.
+
+        ### Params:
+        event : tk.event
+         The event object as this is a callback (unused)
+        """
         # Create new Equation and clear entry
         equation = Equation(self.equation_entry.ent_equation.get())
         self.equation_entry.ent_equation.delete(0, tk.END)
@@ -60,24 +67,36 @@ class App(tk.Tk):
         self.history.scrollableFrame._update_scroll_region(None)
         self.equations.append(equation)
 
-    ## @brief Remove an equation from the history
-    # @param self The object pointer
-    # @param equation The equation to remove
     def remove_equation(self, equation: Equation):
+        """
+        Remove an equation from the history frame called by the delete
+        button in the Equation widget.
+
+        ### Params:
+        equation : Equation
+         The equation to remove
+        """
         self.equations.remove(equation)
         print(equation)
 
-    ## @brief Create the main window
-    # @param self The object pointer
     def __setup_window(self):
+        """
+        Create the main application window
+        """
         # Set up the window
-        self.title("Printing Calculator - Jack Duignan")
+        self.app.title("Printing Calculator - Jack Duignan")
 
-        self.minsize(500, 250)
-        self.geometry("500x250")
+        self.app.minsize(500, 250)
+        self.app.geometry("500x250")
+
+    def start (self):
+        """
+        Start the printing calculator app
+        """
+        self.app.mainloop()
 
 
 myapp = App()
 
 # start the program
-myapp.mainloop()
+myapp.start()
