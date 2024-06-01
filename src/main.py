@@ -33,7 +33,8 @@ class App:
 
         # Create the equation entry
         self.equation_entry = EquationEntry(self.app, add_equation_function=self.add_equation)
-
+        self.equation_entry.grid(row=1, column=0, sticky="nsew")
+        
         # Create the history
         self.history = History(self.app)
         self.history.scrollableFrame.interior
@@ -62,7 +63,7 @@ class App:
         self.equation_entry.ent_equation.delete(0, tk.END)
 
         # Add created equation to the gui
-        equation.create_equation(self.history.scrollableFrame.interior, len(self.equations), deleteFunction=self.remove_equation)
+        equation.create_equation(self.history.scrollableFrame.interior, len(self.equations), delete_function=self.remove_equation)
         self.history.scrollableFrame._resize_interior(None)
         self.history.scrollableFrame._update_scroll_region(None)
         self.equations.append(equation)

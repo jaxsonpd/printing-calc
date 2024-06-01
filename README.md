@@ -51,6 +51,7 @@ The current interface with equations, showing the delete button scrollbar and eq
 - [ ] Export the current tab to plain text.
 
 ## Code
-- [ ] Change comments to doc strings.
-- [ ] Change all classes to not inherit from TK as then the get deleted when the GUI is deleted.
-- [ ] Change create_equation to not place itself.
+- [x] Change comments to doc strings.
+- [x] Change all classes to not inherit from TK as then the get deleted when the GUI is deleted.
+- [ ] Add __getattr__ to all tk.Frame classes
+- [ ] Stop classes placing themselves.
