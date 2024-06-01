@@ -47,7 +47,7 @@ class App:
         self.equations.append(Equation("3+3"))
 
         for i in range(len(self.equations)):
-            self.equations[i].create_equation(self.history.scrollableFrame.interior, i, deleteFunction=self.remove_equation)
+            self.equations[i].create_equation(self.history.scrollableFrame.interior, i, delete_function=self.remove_equation)
 
     def add_equation(self, event):
         """

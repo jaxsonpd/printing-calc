@@ -34,7 +34,7 @@ class ScrollableFrame():
         self.outer.grid_rowconfigure(0, weight=1)
 
         # Create the canvas
-        self.canvas = tk.Canvas(self.outer, borderwidth=0, highlightthickness=0, takefocus=0, background="red")
+        self.canvas = tk.Canvas(self.outer, borderwidth=0, highlightthickness=0, takefocus=0)
 
         # Create the scroll bar
         self.scrollbar = ttk.Scrollbar(self.outer, orient="vertical", command=self.canvas.yview)
