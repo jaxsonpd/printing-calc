@@ -31,8 +31,8 @@ The current interface:
 
 # ToDo
 ## GUI
-- [ ] Stretch the equation block to fit screen.
-- [ ] Scroll windows scrolling.
+- [x] Stretch the equation block to fit screen.
+- [x] Scroll windows scrolling.
 
 ## Functionality
 - [ ] Add variables.
@@ -46,3 +46,4 @@ The current interface:
 ## Code
 - [ ] Change comments to doc strings.
 - [ ] Change all classes to not inherit from TK as then the get deleted when the GUI is deleted.
+- [ ] Change create_equation to not place itself.
