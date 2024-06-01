@@ -1,10 +1,12 @@
 # PrintingCalc
 # Description
-A calculator with history that allows function use etc. this project takes inspiration from the speedCrunch app. But planes to extend upon it in the following ways:
+A calculator with history that allows function use etc. this project takes inspiration from the speedCrunch app. But plans to extend upon it in the following ways:
 
 - Add ability to delete equations that are unwanted.
 - Add tabs so that calculations can have scope.
-- Ability to add comments
+- Ability to add comments.
+- The ability to edit equations.
+- The ability to move equations around.
 
 These changes intend to turn the speedcrunch app, which is a pure calculator with functions and history, into more of a mathematical calculation suite that allows the user to have more control over how the maths in described.
 
@@ -19,15 +21,20 @@ Then run main.py using python3:
 python3 main.py
 ```
 
+Package Requirements:
+
+- Tk
+
 # Use
 The current app supports
 - Simple equations (python parsed) placed into the entry box at the bottom of the screen.
 - Deleting of equations.
+- Scrollable history.
 
 # Screenshots
-The current interface:
+The current interface with equations, showing the delete button scrollbar and equation entry:
 
-![Current-Main-Interface](./screenshots/main-interface.png)
+![Current-Main-Interface](./screenshots/Main-Interface-With-Streaching.png)
 
 # ToDo
 ## GUI
