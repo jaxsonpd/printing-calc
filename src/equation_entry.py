@@ -34,7 +34,6 @@ class EquationEntry():
         self.outer.rowconfigure(0, weight=1)
         self.outer.columnconfigure(0, weight=1)
 
-        self.outer.grid(row=row, column=0, sticky="nsew")
         self.add_equation_function = add_equation_function
 
         # Create the equation widgets

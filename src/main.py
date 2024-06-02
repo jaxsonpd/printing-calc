@@ -37,7 +37,6 @@ class App:
         
         # Create the history
         self.history = History(self.app)
-        self.history.scrollableFrame.interior
         
 
         self.equations = [] # The list of equations currently being stored in the history window
@@ -48,7 +47,7 @@ class App:
         self.equations.append(Equation("3+3"))
 
         for i in range(len(self.equations)):
-            self.equations[i].create_equation(self.history.scrollableFrame.interior, i, delete_function=self.remove_equation)
+            self.equations[i].create_equation(self.history.inner, i, delete_function=self.remove_equation)
 
     def add_equation(self, event):
         """
@@ -63,10 +62,12 @@ class App:
         self.equation_entry.ent_equation.delete(0, tk.END)
 
         # Add created equation to the gui
-        equation.create_equation(self.history.scrollableFrame.interior, len(self.equations), delete_function=self.remove_equation)
-        self.history.scrollableFrame._resize_interior(None)
-        self.history.scrollableFrame._update_scroll_region(None)
+        equation.create_equation(self.history.inner, len(self.equations), delete_function=self.remove_equation)
         self.equations.append(equation)
+
+        self.app.update_idletasks()
+
+        self.history.scroll("bottom")
 
     def remove_equation(self, equation: Equation):
         """

@@ -9,7 +9,7 @@ from tkinter import ttk
 from scrollable_frame import ScrollableFrame
 
 
-class History():
+class History(ScrollableFrame):
     """
     This class displays the equations in a scrollable format.
     """
@@ -25,9 +25,9 @@ class History():
          The row of the frame for the history window to appear in.
         """
         # Setup the scrollable frame
-        self.scrollableFrame = ScrollableFrame(master) 
-        self.scrollableFrame.outer.grid(row=row, column=0, sticky="nsew")
+        ScrollableFrame.__init__(self, master)
+        self.grid(row=row, column=0, sticky="nsew")
 
         # Allow the frame to resize
-        self.scrollableFrame.interior.rowconfigure(0, weight=1)
-        self.scrollableFrame.interior.columnconfigure(0, weight=1)
+        self.inner.rowconfigure(0, weight=1)
+        self.inner.columnconfigure(0, weight=1)
