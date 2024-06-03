@@ -13,20 +13,21 @@ class History(ScrollableFrame):
     """
     This class displays the equations in a scrollable format.
     """
-    def __init__(self, master: ttk.Widget = None, row: int = 0):
+    def __init__(self, master: tk.Tk = None):
         """
         The constructor for the History class
 
         ### Params:
-        master : ttk.Widget
+        master : tk.Tk
          The master frame for the history window to be placed inside of.
         
-        row : int
-         The row of the frame for the history window to appear in.
+        ### Variables:
+        inner : tk.Frame
+         The inner frame to place things in
+         
         """
         # Setup the scrollable frame
-        ScrollableFrame.__init__(self, master)
-        self.grid(row=row, column=0, sticky="nsew")
+        super().__init__(master)
 
         # Allow the frame to resize
         self.inner.rowconfigure(0, weight=1)

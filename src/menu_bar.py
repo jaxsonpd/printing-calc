@@ -6,7 +6,7 @@
 import tkinter as tk
 
 
-class MenuBar:
+class MenuBar(tk.Menu):
     """
     Menu bar class which contains the formatting and functionality 
     for the main menu
@@ -17,19 +17,18 @@ class MenuBar:
 
         @param master the master widget to make this a child of
         """
-        self.master = master
-        self.menu = tk.Menu(self.master)
+        super().__init__(master)
 
         self.filemenu = self.__create_filemenu()
 
         # Add menus to the menu bar
-        self.menu.add_cascade(label="File", menu=self.filemenu)
+        self.add_cascade(label="File", menu=self.filemenu)
 
-        self.master.config(menu=self.menu)
+        self.master.config(menu=self)
 
     def __create_filemenu(self) -> None:
         """ Create the file menu """
-        filemenu = tk.Menu(self.menu, tearoff=0)
+        filemenu = tk.Menu(self, tearoff=0)
 
         filemenu.add_command(label="New Window")
         filemenu.add_separator()

@@ -26,7 +26,7 @@ class ScrollableFrame(tk.Frame):
         inner : tk.Frame
          The inner frame of the scrollable window used to place the internal objects
         """
-        tk.Frame.__init__(self, master)
+        super().__init__(master)
         self.grid_columnconfigure(0, weight=1)
         self.grid_rowconfigure(0, weight=1)
 
@@ -90,10 +90,7 @@ class ScrollableFrame(tk.Frame):
         elif (position == "top"):
             self.canvas.yview_moveto(0)
         else:
-            try:
-                self.canvas.yview_moveto(float(position))
-            except ValueError:
-                raise ValueError(f"\'{position}\' not a valid fraction to scroll to")
+            self.canvas.yview_moveto(float(position))
 
 if __name__ == "__main__":
     root = tk.Tk()

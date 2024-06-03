@@ -27,6 +27,9 @@ class Equation():
 
         result : float or str
          The result of the equation
+
+        frm_equation : str
+         The outer frame of the equation
         """
         self.equation_str = equation
         self.result = self.__find_result()
@@ -83,7 +86,7 @@ class Equation():
         if self.delete_function != None:
             self.delete_function(self) # Remove the equation from the list
 
-    def create_equation(self, master: tk.Widget, row: int, delete_function = None, column: int = 0, sticky: str = "sew"):
+    def create_equation(self, master: tk.Widget, delete_function = None):
         """
         Create the equation GUI object. Currently places itself I 
         dont think that is the best way of doing it.
@@ -91,19 +94,12 @@ class Equation():
         ### Params:
         master : tk.Widget
          The master widget for the equation.
-        row : int
-         The master widget row to place the equation in.
         delete_function = None
          The delete function to be called when the GUI object is destroyed.
-        column : int = 0
-         The column to place the equation in.
-        sticky : str = "sew"
-         The sticky for the equation.
         """
         # Create the equation frame
         self.frm_equation = tk.Frame(master)
         self.frm_equation.columnconfigure(0, weight=1)
-        self.frm_equation.grid(row=row, column=column, sticky=sticky)
 
         self.lbl_equation = ttk.Label(self.frm_equation, text=self.equation_str, anchor="w")
         self.lbl_equation.grid(row=0, column=0, sticky="new")

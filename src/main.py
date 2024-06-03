@@ -12,7 +12,7 @@ from menu_bar import MenuBar
 from equation_entry import EquationEntry
 from history import History
 
-class App:
+class App(tk.Tk):
     """
     The main application class
     """
@@ -20,23 +20,24 @@ class App:
         """
         Initialise a new GUI application 
         """
-        self.app = tk.Tk()
+        super().__init__()
 
         # Set up the master grid
-        self.app.rowconfigure(0, weight=1)
-        self.app.columnconfigure(0, weight=1)
+        self.rowconfigure(0, weight=1)
+        self.columnconfigure(0, weight=1)
 
         self.__setup_window()
 
         # Create the menu bar
-        self.menu_bar = MenuBar(self.app)
+        self.menu_bar = MenuBar(self)
 
         # Create the equation entry
-        self.equation_entry = EquationEntry(self.app, add_equation_function=self.add_equation)
+        self.equation_entry = EquationEntry(self, add_equation_function=self.add_equation)
         self.equation_entry.grid(row=1, column=0, sticky="nsew")
         
         # Create the history
-        self.history = History(self.app)
+        self.history = History(self)
+        self.history.grid(row=0, column=0, sticky="nsew")
         
 
         self.equations = [] # The list of equations currently being stored in the history window
@@ -47,7 +48,8 @@ class App:
         self.equations.append(Equation("3+3"))
 
         for i in range(len(self.equations)):
-            self.equations[i].create_equation(self.history.inner, i, delete_function=self.remove_equation)
+            self.equations[i].create_equation(self.history.inner, delete_function=self.remove_equation)
+            self.equations[i].frm_equation.grid(row=i, column=0, sticky="ew")
 
     def add_equation(self, event):
         """
@@ -62,10 +64,12 @@ class App:
         self.equation_entry.ent_equation.delete(0, tk.END)
 
         # Add created equation to the gui
-        equation.create_equation(self.history.inner, len(self.equations), delete_function=self.remove_equation)
+        equation.create_equation(self.history.inner, delete_function=self.remove_equation)
+        equation.frm_equation.grid(row=len(self.equations), column=0, sticky="ew")
+
         self.equations.append(equation)
 
-        self.app.update_idletasks()
+        self.update_idletasks()
 
         self.history.scroll("bottom")
 
@@ -86,16 +90,16 @@ class App:
         Create the main application window
         """
         # Set up the window
-        self.app.title("Printing Calculator - Jack Duignan")
+        self.title("Printing Calculator - Jack Duignan")
 
-        self.app.minsize(500, 250)
-        self.app.geometry("500x250")
+        self.minsize(500, 250)
+        self.geometry("500x250")
 
     def start (self):
         """
         Start the printing calculator app
         """
-        self.app.mainloop()
+        self.mainloop()
 
 
 myapp = App()
