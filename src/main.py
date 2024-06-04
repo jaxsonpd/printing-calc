@@ -38,18 +38,6 @@ class App(tk.Tk):
         # Create the history
         self.history = History(self)
         self.history.grid(row=0, column=0, sticky="nsew")
-        
-
-        self.equations = [] # The list of equations currently being stored in the history window
-
-        # Create some test equations
-        self.equations.append(Equation("1+1"))
-        self.equations.append(Equation("2+2"))
-        self.equations.append(Equation("3+3"))
-
-        for i in range(len(self.equations)):
-            self.equations[i].create_equation(self.history.inner, delete_function=self.remove_equation)
-            self.equations[i].frm_equation.grid(row=i, column=0, sticky="ew")
 
     def add_equation(self, event):
         """
@@ -64,26 +52,14 @@ class App(tk.Tk):
         self.equation_entry.ent_equation.delete(0, tk.END)
 
         # Add created equation to the gui
-        equation.create_equation(self.history.inner, delete_function=self.remove_equation)
-        equation.frm_equation.grid(row=len(self.equations), column=0, sticky="ew")
+        equation.create_equation(self.history.inner, delete_function=self.history.remove_equation)
+        equation.frm_equation.grid(row=len(self.history.equations), column=0, sticky="ew")
 
-        self.equations.append(equation)
+        self.history.equations.append(equation)
 
         self.update_idletasks()
 
         self.history.scroll("bottom")
-
-    def remove_equation(self, equation: Equation):
-        """
-        Remove an equation from the history frame called by the delete
-        button in the Equation widget.
-
-        ### Params:
-        equation : Equation
-         The equation to remove
-        """
-        self.equations.remove(equation)
-        print(equation)
 
     def __setup_window(self):
         """
