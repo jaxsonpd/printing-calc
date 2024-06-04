@@ -38,18 +38,18 @@ class ScrollableFrame(tk.Frame):
 
         # Configure the canvas
         self.canvas.configure(yscrollcommand=self.scrollbar.set)
-        self.canvas.bind("<Configure>", self._resize_inner)
+        self.canvas.bind("<Configure>", self.__resize_inner)
 
         # Create the frame
-        self.inner = tk.Frame(self.canvas, bg="red", width=master.winfo_width(),)
+        self.inner = tk.Frame(self.canvas, width=master.winfo_width(),)
         self.inner_id = self.canvas.create_window(0, 0, anchor='nw', window=self.inner)
-        self.inner.bind("<Configure>", self._update_scroll_region)
+        self.inner.bind("<Configure>", self.__update_scroll_region)
 
         # Layout
         self.canvas.grid(row=0, column=0, sticky="nsew")
         self.scrollbar.grid(row=0, column=1, sticky="ns")
 
-    def _resize_inner(self, event) -> None:
+    def __resize_inner(self, event : tk.Event = None) -> None:
         """
         The callback function for the interior resize operation.
 
@@ -61,12 +61,12 @@ class ScrollableFrame(tk.Frame):
             # Update the inner frames width to fill the canvas
             self.canvas.itemconfigure(self.inner_id, width=self.canvas.winfo_width())
 
-    def _update_scroll_region(self, event) -> None:
+    def __update_scroll_region(self, event : tk.Event = None) -> None:
         """
-        The callback function for the interior scroll operation. (Not working Correctly)
+        The callback function for the interior scroll operation.
 
         ### Params:
-        event
+        event : tk.Event
          The event passed by tk
         """
         # update scrollbar to match the size of the inner frame
@@ -76,6 +76,13 @@ class ScrollableFrame(tk.Frame):
         if self.inner.winfo_reqwidth() != self.canvas.winfo_width():
             # update the canvas's width to fit the interior frame
             self.canvas.config(width=self.inner.winfo_reqwidth())
+
+    def update(self):
+        """
+        Force an update to the scrollable frame
+        """
+        self.__resize_inner()
+        self.__update_scroll_region()
 
     def scroll(self, position: str):
         """
