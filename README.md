@@ -52,6 +52,5 @@ The current interface with equations, showing the delete button scrollbar and eq
 
 ## Code
 - [x] Change comments to doc strings.
-- [x] Change all classes to not inherit from TK as then the get deleted when the GUI is deleted.
-- [ ] Add __getattr__ to all tk.Frame classes
-- [ ] Stop classes placing themselves.
+- [x] Stop classes placing themselves.
+- [ ] Fix clear function
