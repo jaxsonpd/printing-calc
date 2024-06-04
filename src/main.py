@@ -28,16 +28,16 @@ class App(tk.Tk):
 
         self.__setup_window()
 
+        # Create the history
+        self.history = History(self)
+        self.history.grid(row=0, column=0, sticky="nsew")
+
         # Create the menu bar
-        self.menu_bar = MenuBar(self)
+        self.menu_bar = MenuBar(self, [self.history])
 
         # Create the equation entry
         self.equation_entry = EquationEntry(self, add_equation_function=self.add_equation)
         self.equation_entry.grid(row=1, column=0, sticky="nsew")
-        
-        # Create the history
-        self.history = History(self)
-        self.history.grid(row=0, column=0, sticky="nsew")
 
     def add_equation(self, event):
         """
