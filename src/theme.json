@@ -1,0 +1,10 @@
+{
+    "version": 1,
+    "colours": {
+        "equation": [255, 255, 255],
+        "comment": [215, 153, 33],
+        "result": [69, 133, 136],
+        "background": [60, 56, 54],
+        "delete_button": [204, 36, 29]
+    }
+}

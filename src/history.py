@@ -6,6 +6,10 @@
 import tkinter as tk
 from tkinter import ttk
 
+import json
+
+from utils import rgb_to_tk
+
 from scrollable_frame import ScrollableFrame
 from equation import Equation 
 
@@ -33,6 +37,12 @@ class History(ScrollableFrame):
         # Setup the scrollable frame
         super().__init__(master)
 
+        # Colour theme
+        with open("./src/theme.json", 'r') as f:
+            theme = json.load(f)
+
+        self.inner.config(background=rgb_to_tk(theme["colours"]["background"]))
+        self.canvas.config(background=rgb_to_tk(theme["colours"]["background"]))
         # Allow the frame to resize
         self.inner.rowconfigure(0, weight=1)
         self.inner.columnconfigure(0, weight=1)
