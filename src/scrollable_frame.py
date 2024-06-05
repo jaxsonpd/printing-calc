@@ -51,7 +51,7 @@ class ScrollableFrame(tk.Frame):
 
     def __resize_inner(self, event : tk.Event = None) -> None:
         """
-        The callback function for the interior resize operation.
+        The callback function for the canvas interior resize operation.
 
         ### Params:
         event
@@ -63,14 +63,14 @@ class ScrollableFrame(tk.Frame):
 
     def __update_scroll_region(self, event : tk.Event = None) -> None:
         """
-        The callback function for the interior scroll operation.
+        The callback function for the inner frame configure operation.
 
         ### Params:
         event : tk.Event
          The event passed by tk
         """
         # update scrollbar to match the size of the inner frame
-        size = (self.inner.winfo_reqwidth(), self.inner.winfo_reqheight())
+        size = (event.width, event.height)
         self.canvas.config(scrollregion="0 0 %s %s" % size)
         
         if self.inner.winfo_reqwidth() != self.canvas.winfo_width():
@@ -83,9 +83,6 @@ class ScrollableFrame(tk.Frame):
         """
         self.canvas.event_generate("<Configure>")
         self.inner.event_generate("<Configure>")
-        self.__resize_inner()
-        self.__update_scroll_region()
-        print("updated")
 
     def scroll(self, position: str):
         """

@@ -44,16 +44,17 @@ class MenuBar(tk.Menu):
         filemenu = tk.Menu(self, tearoff=0)
 
         filemenu.add_command(label="New Window")
+        filemenu.add_command(label="Clear", command=self.__clear_history)
         filemenu.add_separator()
 
         filemenu.add_command(label="Save")
         filemenu.add_command(label="Save as")
+        filemenu.add_command(label="Export")
         filemenu.add_separator()
         
         filemenu.add_command(label="Preferences")
         filemenu.add_separator()
         
-        filemenu.add_command(label="Clear", command=self.__clear_history)
         filemenu.add_command(label="Exit", command=self.master.quit)
 
         return filemenu
@@ -67,16 +68,15 @@ class MenuBar(tk.Menu):
          The event object
         """
 
-        ## Find the active history and clear it 
+        # Find the active history and clear it 
         for history in self.histories:
             if (bool(history.grid_info())):
                 for equation in copy(history.equations):
                     equation.delete_equation()
-
-                self.master.update_idletasks()
-                history.scroll("top")
-                history.test_update()
-                self.master.grid_propagate(0)
-                print(history.inner.winfo_height())
-
-                break
+                
+        # These calls ensure that the scroll bar resets
+        # be very careful it is finicky it works the same
+        # as self.master.update_idle() then update
+        # but I think it makes more sense
+        history.scroll("top")
+        self.master.after_idle(history.test_update) 
