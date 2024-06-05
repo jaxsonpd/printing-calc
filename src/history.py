@@ -38,7 +38,7 @@ class History(ScrollableFrame):
         self.inner.columnconfigure(0, weight=1)
 
         ## The list of Equation objects displayed in the frame  
-        self.equations = [] 
+        self.equations : list[Equation] = list()
 
         # Create some test equations
         self.equations.append(Equation("1+1"))

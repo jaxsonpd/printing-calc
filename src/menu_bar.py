@@ -7,12 +7,13 @@ import tkinter as tk
 
 from copy import copy
 
+from history import History
 class MenuBar(tk.Menu):
     """
     Menu bar class which contains the formatting and functionality 
     for the main menu
     """
-    def __init__(self, master: tk.Widget, histories : list) -> None:
+    def __init__(self, master: tk.Widget, histories : list[History]) -> None:
         """
         Initialise the class
 
