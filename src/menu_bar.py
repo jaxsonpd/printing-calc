@@ -74,7 +74,9 @@ class MenuBar(tk.Menu):
                     equation.delete_equation()
 
                 self.master.update_idletasks()
-                print("updated")
-                history.update()
+                history.scroll("top")
+                history.test_update()
+                self.master.grid_propagate(0)
+                print(history.inner.winfo_height())
 
                 break

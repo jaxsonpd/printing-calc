@@ -77,12 +77,15 @@ class ScrollableFrame(tk.Frame):
             # update the canvas's width to fit the interior frame
             self.canvas.config(width=self.inner.winfo_reqwidth())
 
-    def update(self):
+    def test_update(self):
         """
         Force an update to the scrollable frame
         """
+        self.canvas.event_generate("<Configure>")
+        self.inner.event_generate("<Configure>")
         self.__resize_inner()
         self.__update_scroll_region()
+        print("updated")
 
     def scroll(self, position: str):
         """
