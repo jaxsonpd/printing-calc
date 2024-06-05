@@ -18,7 +18,7 @@ git clone https://github.com/jaxsonpd/PrintingCalc.git
 ```
 Then run main.py using python3:
 ```bash
-python3 main.py
+python3 ./src/main.py
 ```
 
 Package Requirements:
@@ -30,15 +30,16 @@ The current app supports
 - Simple equations (python parsed) placed into the entry box at the bottom of the screen.
 - Deleting of equations.
 - Scrollable history.
+- Configurable colour schemes using json.
 
 # Screenshots
 The current interface with equations, showing the delete button scrollbar and equation entry:
 
-![Current-Main-Interface](./screenshots/Main-Interface-With-Streaching.png)
+![Current-Main-Interface](./screenshots/main_interface_colour.png)
 
 # ToDo
 ## GUI
-- [ ] Find a colour scheme.
+- [x] Find a colour scheme.
 
 ## Functionality
 - [ ] Add variables.
