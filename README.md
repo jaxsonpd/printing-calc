@@ -40,6 +40,7 @@ The current interface with equations, showing the delete button scrollbar and eq
 ## GUI
 - [x] Stretch the equation block to fit screen.
 - [x] Scroll windows scrolling.
+- [ ] Find a colour scheme.
 
 ## Functionality
 - [ ] Add variables.
