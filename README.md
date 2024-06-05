@@ -38,8 +38,6 @@ The current interface with equations, showing the delete button scrollbar and eq
 
 # ToDo
 ## GUI
-- [x] Stretch the equation block to fit screen.
-- [x] Scroll windows scrolling.
 - [ ] Find a colour scheme.
 
 ## Functionality
@@ -52,6 +50,5 @@ The current interface with equations, showing the delete button scrollbar and eq
 - [ ] Export the current tab to plain text.
 
 ## Code
-- [x] Change comments to doc strings.
-- [x] Stop classes placing themselves.
-- [ ] Fix clear function
+- [ ] Sort out the scrollable frame class as the current callbacks are over complicated.
+- [x] Fix clear function
