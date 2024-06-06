@@ -48,7 +48,7 @@ class EquationEntry(tk.Frame):
 
         # Colour scheme
         self.ent_equation.config(background=rgb_to_tk(self.theme.colours.entry_background),
-                                 foreground=rgb_to_tk(self.theme.colours.equation_ent_txt),
+                                 foreground=rgb_to_tk(self.theme.colours.entry_text),
                                  relief="flat",
                                  insertbackground="white",
                                  highlightcolor="white",
