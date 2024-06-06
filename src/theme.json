@@ -10,7 +10,7 @@
         "entry_background": [75, 71, 69]
     },
     "font": {
-        "family": "Helvetica",
+        "family": "MathJax_Typewriter",
         "size": 16
     }
 }

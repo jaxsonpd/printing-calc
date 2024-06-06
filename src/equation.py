@@ -131,25 +131,27 @@ class Equation():
             self.lbl_result = tk.Label(self.frm_equation, text="", anchor="w")
             self.lbl_result.grid(row=1, column=0, sticky="new")
  
-        self.btn_delete = tk.Button(self.frm_equation, 
-                                    text="x", 
-                                    command=self.delete_equation, 
-                                    highlightthickness=0,
-                                    relief="flat")
+        self.btn_delete = tk.Button(self.frm_equation, command=self.delete_equation)
+        
         self.btn_delete.grid(row=0, column=1, rowspan=2, padx=10)
 
-        # Set colours
-        self.lbl_equation.config(background=rgb_to_tk(self.theme.colours.background))
+        # Set theme
+        self.lbl_equation.config(background=rgb_to_tk(self.theme.colours.background),
+                                 font=(self.theme.font.family, self.theme.font.size))
 
         if (self.type == "comment"):
             self.lbl_equation.config(foreground=rgb_to_tk(self.theme.colours.comment))
         elif (self.type == "equation"):
             self.lbl_equation.config(foreground=rgb_to_tk(self.theme.colours.equation))
 
-        self.lbl_result.config(foreground=rgb_to_tk(self.theme.colours.result))            
-        self.lbl_result.config(background=rgb_to_tk(self.theme.colours.background))            
+        self.lbl_result.config(foreground=rgb_to_tk(self.theme.colours.result),
+                               background=rgb_to_tk(self.theme.colours.background),
+                               font=(self.theme.font.family, self.theme.font.size))            
 
-        self.btn_delete.config(background=rgb_to_tk(self.theme.colours.delete_button))
+        self.btn_delete.config(highlightthickness=0,
+                                relief="flat",
+                                background=rgb_to_tk(self.theme.colours.delete_button),
+                                font=(self.theme.font.family, self.theme.font.size))
 
         # Set the delete function
         self.delete_function = delete_function

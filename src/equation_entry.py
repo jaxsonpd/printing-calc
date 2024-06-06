@@ -53,7 +53,8 @@ class EquationEntry(tk.Frame):
                                  insertbackground="white",
                                  highlightcolor="white",
                                  highlightthickness=0,
-                                 insertwidth=1)
+                                 insertwidth=1,
+                                 font=(self.theme.font.family, self.theme.font.size))
                                  
 
     def add_equation(self, event:tk.Event):

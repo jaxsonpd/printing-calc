@@ -50,9 +50,10 @@ class History(ScrollableFrame):
         self.equations : list[Equation] = list()
 
         # Create some test equations
+        self.equations.append(Equation("# Question 1:"))
         self.equations.append(Equation("1+1"))
-        self.equations.append(Equation("2+2"))
-        self.equations.append(Equation("3+3"))
+        self.equations.append(Equation("5*2"))
+        self.equations.append(Equation("3+3**2+4"))
 
         for i in range(len(self.equations)):
             self.equations[i].create_equation(self.inner, delete_function=self.remove_equation)
