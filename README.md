@@ -52,4 +52,5 @@ The current interface with equations, showing the delete button scrollbar and eq
 
 ## Code
 - [ ] Sort out the scrollable frame class as the current callbacks are over complicated.
-- [x] Fix clear function
+- [ ] Update equation rows when equations are deleted.
+- [ ] Create config class to process json config files
