@@ -1,7 +1,5 @@
-import json
+from configuration import Config
 
-with open("./src/theme.json", 'r') as f:
-    theme = json.load(f)
+theme = Config.load_json("./src/theme.json")
 
-print(theme['version'])
-print(theme['colours']['equation'])
+print(theme.colours.equation)

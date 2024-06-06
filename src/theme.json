@@ -5,7 +5,9 @@
         "comment": [215, 153, 33],
         "result": [69, 133, 136],
         "background": [60, 56, 54],
-        "delete_button": [204, 36, 29]
+        "delete_button": [204, 36, 29],
+        "entry_text": [255, 255, 255],
+        "entry_background": [75, 71, 69]
     },
     "font": {
         "family": "Helvetica",

@@ -6,6 +6,8 @@
 import tkinter as tk
 from tkinter import ttk
 
+from configuration import Config
+from utils import rgb_to_tk
 
 class EquationEntry(tk.Frame):
     """
@@ -28,7 +30,9 @@ class EquationEntry(tk.Frame):
         outer : tk.Frame
          The outer frame of the equation entry
         """
-        super().__init__(master)
+        super().__init__(master)   
+
+        self.theme = Config.load_json("./src/theme.json")
 
         # Create the equation frame  
         self.rowconfigure(0, weight=1)
@@ -37,9 +41,20 @@ class EquationEntry(tk.Frame):
         self.add_equation_function = add_equation_function
 
         # Create the equation widgets
-        self.ent_equation = ttk.Entry(self)
+        self.ent_equation = tk.Entry(self)
+        self.ent_equation.focus_set()
         self.ent_equation.bind("<Return>", self.add_equation)
         self.ent_equation.grid(row=0, column=0, sticky="nsew")
+
+        # Colour scheme
+        self.ent_equation.config(background=rgb_to_tk(self.theme.colours.entry_background),
+                                 foreground=rgb_to_tk(self.theme.colours.equation_ent_txt),
+                                 relief="flat",
+                                 insertbackground="white",
+                                 highlightcolor="white",
+                                 highlightthickness=0,
+                                 insertwidth=1)
+                                 
 
     def add_equation(self, event:tk.Event):
         """

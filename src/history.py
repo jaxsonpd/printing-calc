@@ -6,7 +6,7 @@
 import tkinter as tk
 from tkinter import ttk
 
-import json
+from configuration import Config
 
 from utils import rgb_to_tk
 
@@ -37,12 +37,11 @@ class History(ScrollableFrame):
         # Setup the scrollable frame
         super().__init__(master)
 
-        # Colour theme
-        with open("./src/theme.json", 'r') as f:
-            theme = json.load(f)
+        self.theme = Config.load_json("./src/theme.json")
 
-        self.inner.config(background=rgb_to_tk(theme["colours"]["background"]))
-        self.canvas.config(background=rgb_to_tk(theme["colours"]["background"]))
+        self.inner.config(background=rgb_to_tk(self.theme.colours.background))
+        self.canvas.config(background=rgb_to_tk(self.theme.colours.background))
+
         # Allow the frame to resize
         self.inner.rowconfigure(0, weight=1)
         self.inner.columnconfigure(0, weight=1)
@@ -69,5 +68,10 @@ class History(ScrollableFrame):
         equation : Equation
         The equation to remove
         """
+        index = self.equations.index(equation)
         self.equations.remove(equation)
-        print(equation)
+
+        # Re initialise the lower equations with the new index one higher
+        for i in range(index, len(self.equations)):
+            self.equations[i].frm_equation.grid(row=i, column=0, sticky="ew")
+

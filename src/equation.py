@@ -7,7 +7,7 @@
 import tkinter as tk
 from tkinter import ttk
 
-import json
+from configuration import Config
 
 from utils import rgb_to_tk
 
@@ -41,6 +41,8 @@ class Equation():
         self.equation_str = equation
         self.type = "None"
         self.result = self.__find_result()
+
+        self.theme = Config.load_json("./src/theme.json")
 
     def __str__(self):
         """
@@ -113,13 +115,10 @@ class Equation():
         delete_function = None
          The delete function to be called when the GUI object is destroyed.
         """
-        with open("./src/theme.json", 'r') as f:
-            theme = json.load(f)
-
         # Create the equation frame
         self.frm_equation = tk.Frame(master)
         self.frm_equation.columnconfigure(0, weight=1)
-        self.frm_equation.config(background=rgb_to_tk(theme['colours']['background']))
+        self.frm_equation.config(background=rgb_to_tk(self.theme.colours.background))
         
         # Create the equation components
         self.lbl_equation = tk.Label(self.frm_equation, text=self.equation_str, anchor="w")
@@ -140,17 +139,17 @@ class Equation():
         self.btn_delete.grid(row=0, column=1, rowspan=2, padx=10)
 
         # Set colours
-        self.lbl_equation.config(background=rgb_to_tk(theme["colours"]["background"]))
+        self.lbl_equation.config(background=rgb_to_tk(self.theme.colours.background))
 
         if (self.type == "comment"):
-            self.lbl_equation.config(foreground=rgb_to_tk(theme["colours"]["comment"]))
+            self.lbl_equation.config(foreground=rgb_to_tk(self.theme.colours.comment))
         elif (self.type == "equation"):
-            self.lbl_equation.config(foreground=rgb_to_tk(theme["colours"]["equation"]))
+            self.lbl_equation.config(foreground=rgb_to_tk(self.theme.colours.equation))
 
-        self.lbl_result.config(foreground=rgb_to_tk(theme["colours"]["result"]))            
-        self.lbl_result.config(background=rgb_to_tk(theme["colours"]["background"]))            
+        self.lbl_result.config(foreground=rgb_to_tk(self.theme.colours.result))            
+        self.lbl_result.config(background=rgb_to_tk(self.theme.colours.background))            
 
-        self.btn_delete.config(background=rgb_to_tk(theme["colours"]["delete_button"]))
+        self.btn_delete.config(background=rgb_to_tk(self.theme.colours.delete_button))
 
         # Set the delete function
         self.delete_function = delete_function
