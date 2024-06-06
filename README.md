@@ -31,19 +31,21 @@ The current app supports
 - Deleting of equations.
 - Scrollable history.
 - Configurable colour schemes using json.
+- Clear screen functionality
+- Comment equations
 
 # Screenshots
 The current interface with equations, showing the delete button scrollbar and equation entry:
 
-![Current-Main-Interface](./screenshots/main_interface_colour.png)
+![Current-Main-Interface](./screenshots/main-24-6-6-20-14.png)
 
 # ToDo
 ## GUI
-- [x] Find a colour scheme.
+- [ ] Flesh out menu.
 
 ## Functionality
 - [ ] Add variables.
-- [ ] Add comments.
+- [x] Add comments.
 - [ ] Add functions.
 - [ ] Add Tabs.
 - [ ] Custom equation parsing.
@@ -52,5 +54,3 @@ The current interface with equations, showing the delete button scrollbar and eq
 
 ## Code
 - [ ] Sort out the scrollable frame class as the current callbacks are over complicated.
-- [ ] Update equation rows when equations are deleted.
-- [ ] Create config class to process json config files
