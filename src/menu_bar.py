@@ -8,6 +8,8 @@ import tkinter as tk
 from copy import copy
 
 from history import History
+from export import ExportWindow
+
 class MenuBar(tk.Menu):
     """
     Menu bar class which contains the formatting and functionality 
@@ -50,7 +52,7 @@ class MenuBar(tk.Menu):
 
         filemenu.add_command(label="Save")
         filemenu.add_command(label="Save as")
-        filemenu.add_command(label="Export")
+        filemenu.add_command(label="Export", command=self.__export)
         filemenu.add_separator()
         
         filemenu.add_command(label="Preferences")
@@ -81,3 +83,13 @@ class MenuBar(tk.Menu):
         # but I think it makes more sense
         history.scroll("top")
         self.master.after_idle(history.test_update) 
+
+    def __export(self, event : tk.Event = None):
+        """
+        Export the current format using the selected format
+
+        ### Params:
+        event : tk.Event
+         The event object
+        """
+        Export = ExportWindow(self.histories[0])
