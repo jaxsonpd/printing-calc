@@ -48,6 +48,11 @@ class App(tk.Tk):
          The event object as this is a callback (unused)
         """
         # Create new Equation and clear entry
+        equation_str = self.equation_entry.ent_equation.get()
+        if (len(equation_str) == 0):
+            return False
+        
+        
         equation = Equation(self.equation_entry.ent_equation.get())
         self.equation_entry.ent_equation.delete(0, tk.END)
 
@@ -66,7 +71,7 @@ class App(tk.Tk):
         Create the main application window
         """
         # Set up the window
-        self.title("Printing Calculator - Jack Duignan")
+        self.title("Printing Calculator")
 
         self.minsize(500, 250)
         self.geometry("500x250")
