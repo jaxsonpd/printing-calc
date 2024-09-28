@@ -70,8 +70,9 @@ class Equation():
          The result of the equation, error if cannot be calculated
         """
         # Have to include globals otherwise current name space is used
+        result = None
+        
         if (self.equation_str[0] == "#"): # comment
-            result = None
             self.type = "comment"
         
         elif (self.equation_str[0].isalpha() and self.equation_str.find(":") != -1): 
@@ -80,7 +81,8 @@ class Equation():
             self.assignments[assignment[0]] = assignment[1]
 
             self.type = "assignment"
-            result = assignment[1]
+            if (not callable(assignment)):
+                result = assignment[1]
         
         else:
             result = eval_equation(self.equation_str, self.assignments)

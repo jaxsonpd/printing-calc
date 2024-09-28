@@ -25,10 +25,10 @@ def eval_equation(equation_str: str, assignments: dict) -> float:
     equation_str = equation_str.replace("^", "**")
     equation_str = equation_str.replace("__XOR__", "^")
     
-    try: 
-        result = eval(equation_str, assignments) # Should never actually do this
-    except:
-        result = "error"
+    # try: 
+    result = eval(equation_str, assignments) # Should never actually do this
+    # except:
+    #     result = "error"
 
     return result
 
@@ -51,11 +51,17 @@ def create_assignment(equation_str: str, assignments: dict) -> Tuple[str, Union[
     name = name[:name.find("(")]
 
     assigne = split_eq_str[1][1:]
-
     assignment = None
 
     if (equation_str.find("(") < equation_str.find(":") and equation_str.find("(") != -1): # Function
-        pass
+        parameters = split_eq_str[0][split_eq_str[0].find("(")+1:-1].split(",")
+        parameters = [param.strip() for param in parameters]
+
+        def f(a):
+            return eval(assigne)
+        
+        assignment = f
+
     else: # variable
         assignment = eval_equation(assigne, assignments)
 
