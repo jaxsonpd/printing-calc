@@ -21,10 +21,6 @@ Then run main.py using python3:
 python3 ./src/main.py
 ```
 
-Package Requirements:
-
-- Tk
-
 # Use
 The current app supports
 - Simple equations (python parsed) placed into the entry box at the bottom of the screen.
@@ -33,24 +29,13 @@ The current app supports
 - Configurable colour schemes using json.
 - Clear screen functionality
 - Comment equations
+- Saving of the calculation history in markdown and plain text.
 
 # Screenshots
 The current interface with equations, showing the delete button scrollbar and equation entry:
 
 ![Current-Main-Interface](./screenshots/main-24-6-6-20-14.png)
 
-# ToDo
-## GUI
-- [ ] Flesh out menu.
+The export interface to allow for saving of calculations:
 
-## Functionality
-- [ ] Add variables.
-- [x] Add comments.
-- [ ] Add functions.
-- [ ] Add Tabs.
-- [ ] Custom equation parsing.
-- [ ] Save the current tab to file.
-- [ ] Export the current tab to plain text.
-
-## Code
-- [ ] Sort out the scrollable frame class as the current callbacks are over complicated.
+![Current-Export-Window](./screenshots/current-export-window.png)
