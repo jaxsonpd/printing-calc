@@ -12,6 +12,7 @@ from utils import rgb_to_tk
 
 from scrollable_frame import ScrollableFrame
 from equation import Equation 
+from equation_eval import default_assignments
 
 
 class History(ScrollableFrame):
@@ -48,6 +49,7 @@ class History(ScrollableFrame):
 
         # Create the assignments dictionary to store varaibles and functions
         self.assignments = dict()
+        default_assignments(self.assignments)
 
         # The list of Equation objects displayed in the frame  
         self.equations : list[Equation] = list()

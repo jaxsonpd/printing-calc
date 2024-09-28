@@ -5,6 +5,7 @@
 # @brief Provide functionality to allow for evaluation of complex equations
 
 from typing import Union, Tuple
+import math
 
 def eval_equation(equation_str: str, assignments: dict) -> float:
     """
@@ -53,3 +54,19 @@ def create_assignment(equation_str: str, assignments: dict) -> Tuple[str, Union[
         assignment = eval_equation(assigne, assignments)
 
     return (name, assignment)
+
+
+def default_assignments(assignments: dict):
+    """
+    Populate the assignments dictionary with the default assignments
+
+    ### Params:
+    assignments
+     The empty assignments dictionary
+    """
+    assignments["pi"] = 3.14159265359
+    assignments["sin"] = math.sin
+    assignments["cos"] = math.cos
+    assignments["tan"] = math.tan
+
+    assignments["exp"] = math.exp
