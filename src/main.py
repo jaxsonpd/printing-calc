@@ -53,7 +53,7 @@ class App(tk.Tk):
             return False
         
         
-        equation = Equation(self.equation_entry.ent_equation.get())
+        equation = Equation(self.equation_entry.ent_equation.get(), self.history.assignments)
         self.equation_entry.ent_equation.delete(0, tk.END)
 
         # Add created equation to the gui
