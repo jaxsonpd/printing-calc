@@ -21,8 +21,12 @@ def eval_equation(equation_str: str, assignments: dict) -> float:
     result
      The result of the equation
     """
+    equation_str = equation_str.replace("^^", "__XOR__")
+    equation_str = equation_str.replace("^", "**")
+    equation_str = equation_str.replace("__XOR__", "^")
+    
     try: 
-        result = eval(equation_str, assignments)
+        result = eval(equation_str, assignments) # Should never actually do this
     except:
         result = "error"
 
@@ -44,6 +48,8 @@ def create_assignment(equation_str: str, assignments: dict) -> Tuple[str, Union[
     """
     split_eq_str = equation_str.split(":")
     name = split_eq_str[0].strip()
+    name = name[:name.find("(")]
+
     assigne = split_eq_str[1][1:]
 
     assignment = None
