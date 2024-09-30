@@ -59,6 +59,8 @@ class History(ScrollableFrame):
         self.equations.append(Equation("1+1", self.assignments))
         self.equations.append(Equation("5*2", self.assignments))
         self.equations.append(Equation("3+3**2+4", self.assignments))
+        self.equations.append(Equation("f(x):=2+x", self.assignments))
+        self.equations.append(Equation("y:=10", self.assignments))
 
         for i in range(len(self.equations)):
             self.equations[i].create_equation(self.inner, delete_function=self.remove_equation)
