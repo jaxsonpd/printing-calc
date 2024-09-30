@@ -12,6 +12,7 @@ from utils import rgb_to_tk
 
 from scrollable_frame import ScrollableFrame
 from equation import Equation 
+from equation_eval import default_assignments
 
 
 class History(ScrollableFrame):
@@ -46,14 +47,18 @@ class History(ScrollableFrame):
         self.inner.rowconfigure(0, weight=1)
         self.inner.columnconfigure(0, weight=1)
 
-        ## The list of Equation objects displayed in the frame  
+        # Create the assignments dictionary to store varaibles and functions
+        self.assignments = dict()
+        default_assignments(self.assignments)
+
+        # The list of Equation objects displayed in the frame  
         self.equations : list[Equation] = list()
 
         # Create some test equations
-        self.equations.append(Equation("# Question 1:"))
-        self.equations.append(Equation("1+1"))
-        self.equations.append(Equation("5*2"))
-        self.equations.append(Equation("3+3**2+4"))
+        self.equations.append(Equation("# Question 1:", self.assignments))
+        self.equations.append(Equation("1+1", self.assignments))
+        self.equations.append(Equation("5*2", self.assignments))
+        self.equations.append(Equation("3+3**2+4", self.assignments))
 
         for i in range(len(self.equations)):
             self.equations[i].create_equation(self.inner, delete_function=self.remove_equation)

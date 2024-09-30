@@ -8,6 +8,7 @@ import tkinter as tk
 from tkinter import ttk
 
 from configuration import Config
+from equation_eval import eval_equation, create_assignment
 
 from utils import rgb_to_tk
 
@@ -16,13 +17,16 @@ class Equation():
     The equation class which stores the equation its result and contains
     the functions to display it in the GUI.
     """
-    def __init__(self, equation: str):
+    def __init__(self, equation: str, assignments: dict = dict()):
         """
         Create an equation class
 
         ### Params:
         equation : str
          The raw equation string
+
+        assignments
+         The dictionary of functions and variables available
 
         ### Variables:
         equation_str : str
@@ -38,9 +42,11 @@ class Equation():
          The type of equation: "None" (default), "expression", "comment",
          "variable", "function" this is set on __find_result()
         """
+        self.assignments = assignments
         self.equation_str = equation
         self.type = "None"
         self.result = self.__find_result()
+
 
         self.theme = Config.load_json("./src/theme.json")
 
@@ -64,14 +70,23 @@ class Equation():
          The result of the equation, error if cannot be calculated
         """
         # Have to include globals otherwise current name space is used
+        result = None
+        
         if (self.equation_str[0] == "#"): # comment
-            result = None
             self.type = "comment"
+        
+        elif (self.equation_str[0].isalpha() and self.equation_str.find(":") != -1): 
+            assignment = create_assignment(self.equation_str, self.assignments)
+            
+            self.assignments[assignment[0]] = assignment[1]
+
+            self.type = "assignment"
+            if (not callable(assignment[1])):
+                result = assignment[1] # If variable report result
+        
         else:
-            try: 
-                result = eval(self.equation_str, {"h":5})
-            except:
-                result = "error"
+            result = eval_equation(self.equation_str, self.assignments)
+            
             
             self.type = "equation"
                 
@@ -101,6 +116,10 @@ class Equation():
         """
         self.frm_equation.destroy() # Remove the equation from the GUI
         
+        # Remove from assignments if necessary
+        # if (self.type == "assignment"):
+        #     self.assignments.pop()
+
         if self.delete_function != None:
             self.delete_function(self) # Remove the equation from the list
 
@@ -143,6 +162,9 @@ class Equation():
             self.lbl_equation.config(foreground=rgb_to_tk(self.theme.colours.comment))
         elif (self.type == "equation"):
             self.lbl_equation.config(foreground=rgb_to_tk(self.theme.colours.equation))
+        elif (self.type == "assignment"):
+            self.lbl_equation.config(foreground=rgb_to_tk(self.theme.colours.assignment))
+
 
         self.lbl_result.config(foreground=rgb_to_tk(self.theme.colours.result),
                                background=rgb_to_tk(self.theme.colours.background),
