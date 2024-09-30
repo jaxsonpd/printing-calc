@@ -32,8 +32,8 @@ class EquationEntry(tk.Frame):
         """
         super().__init__(master)   
         # Values for tracking previous equations
-        self.prev_equations = list()
-        self.prev_equation_idx = 0
+        self.prev_entries = list()
+        self.prev_entry_idx = 0
 
         self.theme = Config.load_json("./src/theme.json")
 
@@ -47,8 +47,8 @@ class EquationEntry(tk.Frame):
         self.ent_equation = tk.Entry(self)
         self.ent_equation.focus_set()
         self.ent_equation.bind("<Return>", self.add_equation_CB)
-        self.ent_equation.bind("<Up>", self.prev_equation_CB)
-        self.ent_equation.bind("<Down>", self.fwd_equation_CB)
+        self.ent_equation.bind("<Up>", self.prev_entry_CB)
+        self.ent_equation.bind("<Down>", self.next_entry_CB)
         self.ent_equation.grid(row=0, column=0, sticky="nsew")
 
         # Colour scheme
@@ -77,18 +77,18 @@ class EquationEntry(tk.Frame):
         
         self.ent_equation.delete(0, tk.END)
 
-        if (len(self.prev_equations) > 4):
-            self.prev_equations.pop(0)
+        if (len(self.prev_entries) > 100):
+            self.prev_entries.pop(0)
 
-        self.prev_equations.append(equation_str)
-        self.prev_equation_idx = len(self.prev_equations)
+        self.prev_entries.append(equation_str)
+        self.prev_entry_idx = len(self.prev_entries)
 
         if (self.add_equation_function != None):
             self.add_equation_function(equation_str)
 
 
 
-    def prev_equation_CB(self, event:tk.Event):
+    def prev_entry_CB(self, event:tk.Event):
         """
         The callback from the equation entry box up arrow
         to recall the previous equation
@@ -97,18 +97,16 @@ class EquationEntry(tk.Frame):
         event : tk.Event
          The unused event object
         """
-        if (self.prev_equation_idx <= 0):
-            self.prev_equation_idx = 0
+        if (self.prev_entry_idx <= 0):
+            self.prev_entry_idx = 0
             return
         
-        self.prev_equation_idx -= 1
+        self.prev_entry_idx -= 1
 
         self.ent_equation.delete(0, tk.END)
-        self.ent_equation.insert(0, self.prev_equations[self.prev_equation_idx])
+        self.ent_equation.insert(0, self.prev_entries[self.prev_entry_idx])
 
-        print(self.prev_equations, self.prev_equation_idx)
-
-    def fwd_equation_CB(self, event:tk.Event):
+    def next_entry_CB(self, event:tk.Event):
         """
         The callback from the equation entry box down arrow
         to recall the forward equation
@@ -117,13 +115,11 @@ class EquationEntry(tk.Frame):
         event : tk.Event
          The unused event object
         """
-        if (self.prev_equation_idx >= len(self.prev_equations)-1):
-            self.prev_equation_idx = len(self.prev_equations)
+        if (self.prev_entry_idx >= len(self.prev_entries)-1):
+            self.prev_entry_idx = len(self.prev_entries)
             return
         
-        self.prev_equation_idx += 1
+        self.prev_entry_idx += 1
 
         self.ent_equation.delete(0, tk.END)
-        self.ent_equation.insert(0, self.prev_equations[self.prev_equation_idx])
-
-        print(self.prev_equations, self.prev_equation_idx)
+        self.ent_equation.insert(0, self.prev_entries[self.prev_entry_idx])
