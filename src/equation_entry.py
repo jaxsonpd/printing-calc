@@ -77,11 +77,11 @@ class EquationEntry(tk.Frame):
         
         self.ent_equation.delete(0, tk.END)
 
-        if (len(self.prev_equations) > 100):
-            self.prev_equations.pop()
+        if (len(self.prev_equations) > 4):
+            self.prev_equations.pop(0)
 
         self.prev_equations.append(equation_str)
-        self.prev_equation_idx = len(self.prev_equations) - 1
+        self.prev_equation_idx = len(self.prev_equations)
 
         if (self.add_equation_function != None):
             self.add_equation_function(equation_str)
@@ -106,6 +106,8 @@ class EquationEntry(tk.Frame):
         self.ent_equation.delete(0, tk.END)
         self.ent_equation.insert(0, self.prev_equations[self.prev_equation_idx])
 
+        print(self.prev_equations, self.prev_equation_idx)
+
     def fwd_equation_CB(self, event:tk.Event):
         """
         The callback from the equation entry box down arrow
@@ -115,11 +117,13 @@ class EquationEntry(tk.Frame):
         event : tk.Event
          The unused event object
         """
-        if (self.prev_equation_idx >= len(self.prev_equations)):
-            self.prev_equation_idx = len(self.prev_equations) - 1
+        if (self.prev_equation_idx >= len(self.prev_equations)-1):
+            self.prev_equation_idx = len(self.prev_equations)
             return
         
         self.prev_equation_idx += 1
 
         self.ent_equation.delete(0, tk.END)
         self.ent_equation.insert(0, self.prev_equations[self.prev_equation_idx])
+
+        print(self.prev_equations, self.prev_equation_idx)
