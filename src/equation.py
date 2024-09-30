@@ -81,8 +81,8 @@ class Equation():
             self.assignments[assignment[0]] = assignment[1]
 
             self.type = "assignment"
-            if (not callable(assignment)):
-                result = assignment[1]
+            if (not callable(assignment[1])):
+                result = assignment[1] # If variable report result
         
         else:
             result = eval_equation(self.equation_str, self.assignments)
@@ -116,6 +116,10 @@ class Equation():
         """
         self.frm_equation.destroy() # Remove the equation from the GUI
         
+        # Remove from assignments if necessary
+        # if (self.type == "assignment"):
+        #     self.assignments.pop()
+
         if self.delete_function != None:
             self.delete_function(self) # Remove the equation from the list
 

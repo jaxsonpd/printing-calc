@@ -6,6 +6,9 @@
 
 from typing import Union, Tuple
 import math
+import copy
+
+FUNCTION_PLACEHOLDER_PARAMS = ["A192004", "B316294", "C449499", "D930100", "E733590"]
 
 def eval_equation(equation_str: str, assignments: dict) -> float:
     """
@@ -46,19 +49,35 @@ def create_assignment(equation_str: str, assignments: dict) -> Tuple[str, Union[
     (name, assignment)
      The name of the assignment and the assignment ether variable or callable
     """
-    split_eq_str = equation_str.split(":")
+    split_eq_str = equation_str.split(":=")
     name = split_eq_str[0].strip()
-    name = name[:name.find("(")]
+    name = name.split("(")[0] # remove function brackets
 
-    assigne = split_eq_str[1][1:]
+    assigne = split_eq_str[1]
     assignment = None
 
     if (equation_str.find("(") < equation_str.find(":") and equation_str.find("(") != -1): # Function
         parameters = split_eq_str[0][split_eq_str[0].find("(")+1:-1].split(",")
         parameters = [param.strip() for param in parameters]
 
-        def f(a):
-            return eval(assigne)
+        # Replace parameters with placeholder names
+        for i in range(len(parameters)):
+            assigne = assigne.replace(parameters[i], FUNCTION_PLACEHOLDER_PARAMS[i])
+
+        def f(A192004=0, B316294=0, C449499=0, D930100=0, E733590=0, assigne=assigne, assignments=assignments):
+            """
+            The function to save. This uses random parameters (up to 5) to ensure no collisions
+            """
+            assignments = copy.deepcopy(assignments)
+            
+            # Add temp placeholders to allow function to execute
+            assignments["A192004"] = A192004
+            assignments["B316294"] = B316294
+            assignments["C449499"] = C449499
+            assignments["D930100"] = D930100
+            assignments["E733590"] = E733590
+
+            return eval_equation(assigne, assignments)
         
         assignment = f
 
