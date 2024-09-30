@@ -39,22 +39,15 @@ class App(tk.Tk):
         self.equation_entry = EquationEntry(self, add_equation_function=self.add_equation)
         self.equation_entry.grid(row=1, column=0, sticky="nsew")
 
-    def add_equation(self, event):
+    def add_equation(self, equation_str):
         """
         Add a new equation to the history. Called by the equation entry.
 
         ### Params:
-        event : tk.event
-         The event object as this is a callback (unused)
+        equation_str
+         The equation to add
         """
-        # Create new Equation and clear entry
-        equation_str = self.equation_entry.ent_equation.get()
-        if (len(equation_str) == 0):
-            return False
-        
-        
-        equation = Equation(self.equation_entry.ent_equation.get(), self.history.assignments)
-        self.equation_entry.ent_equation.delete(0, tk.END)
+        equation = Equation(equation_str, self.history.assignments)
 
         # Add created equation to the gui
         equation.create_equation(self.history.inner, delete_function=self.history.remove_equation)
@@ -65,6 +58,8 @@ class App(tk.Tk):
         self.update_idletasks()
 
         self.history.scroll("bottom")
+
+        return True
 
     def __setup_window(self):
         """
