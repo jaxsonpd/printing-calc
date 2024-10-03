@@ -4,9 +4,9 @@
 #  @brief The file contains the menubar for the main calculator window
 
 import tkinter as tk
-
 from copy import copy
 
+from configuration import ConfigDict
 from history import History
 from export import ExportWindow
 
@@ -15,7 +15,7 @@ class MenuBar(tk.Menu):
     Menu bar class which contains the formatting and functionality 
     for the main menu
     """
-    def __init__(self, master: tk.Widget, histories : list[History]) -> None:
+    def __init__(self, master: tk.Widget, histories : list[History], theme_config: ConfigDict = None) -> None:
         """
         Initialise the class
 
@@ -24,6 +24,8 @@ class MenuBar(tk.Menu):
          The master widget to make this a child of
         histories : list
          A list of the current histories
+        theme_config
+         The theme config
 
         ### Variables:
         histories : list

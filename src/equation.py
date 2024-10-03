@@ -7,7 +7,7 @@
 import tkinter as tk
 from tkinter import ttk
 
-from configuration import Config
+from configuration import Config, ConfigDict
 from equation_eval import eval_equation, create_assignment
 
 from utils import rgb_to_tk
@@ -17,14 +17,16 @@ class Equation():
     The equation class which stores the equation its result and contains
     the functions to display it in the GUI.
     """
-    def __init__(self, equation: str, assignments: dict = dict()):
+    def __init__(self, equation: str, assignments: dict = dict(), theme_config: ConfigDict = None):
         """
         Create an equation class
 
         ### Params:
         equation : str
          The raw equation string
-
+        theme_config
+         The theme config to use
+         
         assignments
          The dictionary of functions and variables available
 
@@ -48,7 +50,7 @@ class Equation():
         self.result = self.__find_result()
 
 
-        self.theme = Config.load_json("./src/theme.json")
+        self.theme = theme_config
 
     def __str__(self):
         """

@@ -6,7 +6,7 @@
 import tkinter as tk
 from tkinter import ttk
 
-from configuration import Config
+from configuration import Config, ConfigDict
 from utils import rgb_to_tk
 
 class EquationEntry(tk.Frame):
@@ -14,13 +14,15 @@ class EquationEntry(tk.Frame):
     The equation entry class which contains the GUI element to 
     enter the equation.
     """
-    def __init__(self, master: tk.Widget = None, add_equation_function = None):
+    def __init__(self, master: tk.Widget = None, add_equation_function = None, theme_config: ConfigDict = None):
         """
         The constructor for the EquationEntry class
 
         ### Params:
         master : tk.Widget
          The master frame to place the equation in
+        theme_config
+         The theme config to use
 
         add_equation_function : function = None
          The function used when enter is pressed to add the equation
@@ -35,7 +37,7 @@ class EquationEntry(tk.Frame):
         self.prev_entries = list()
         self.prev_entry_idx = 0
 
-        self.theme = Config.load_json("./src/theme.json")
+        self.theme = theme_config
 
         # Create the equation frame  
         self.rowconfigure(0, weight=1)
