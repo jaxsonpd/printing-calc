@@ -14,6 +14,13 @@ class ConfigDict(dict):
     __setattr__ = dict.__setitem__
     __delattr__ = dict.__delitem__
 
+    def save_json(self, path):
+        filename = path
+
+        with open(filename, "w+") as f:
+            json.dump(self, f, indent=4)
+            f.close()
+
 class Config(object):
     @staticmethod
     def __load__(data):
@@ -41,5 +48,17 @@ class Config(object):
         with open(path, "r") as f:
             result = Config.__load__(json.loads(f.read()))
         return result
+    
+def test(config):
+    config.version = 2
 
 
+if __name__ == "__main__":
+    with open("test.json", "w+") as f:
+        f.writelines(["{\n", "    \"version\": 1,\n", "    \"display\": true\n", "}\n"])
+        f.close()
+
+    loaded_config = Config.load_json("test.json")
+    loaded_config.version = 3
+
+    loaded_config.save_json("test.json")

@@ -6,7 +6,7 @@
 import tkinter as tk
 from tkinter import ttk
 
-from configuration import Config
+from configuration import Config, ConfigDict
 
 from utils import rgb_to_tk
 
@@ -19,13 +19,15 @@ class History(ScrollableFrame):
     """
     This class displays the equations in a scrollable format.
     """
-    def __init__(self, master: tk.Tk = None):
+    def __init__(self, master: tk.Tk = None, theme_config: ConfigDict = None):
         """
         The constructor for the History class
 
         ### Params:
         master : tk.Tk
          The master frame for the history window to be placed inside of.
+        theme_config
+         The theme configuration
         
         ### Variables:
         inner : tk.Frame
@@ -38,7 +40,7 @@ class History(ScrollableFrame):
         # Setup the scrollable frame
         super().__init__(master)
 
-        self.theme = Config.load_json("./src/theme.json")
+        self.theme = theme_config
 
         self.inner.config(background=rgb_to_tk(self.theme.colours.background))
         self.canvas.config(background=rgb_to_tk(self.theme.colours.background))
@@ -55,12 +57,12 @@ class History(ScrollableFrame):
         self.equations : list[Equation] = list()
 
         # Create some test equations
-        self.equations.append(Equation("# Question 1:", self.assignments))
-        self.equations.append(Equation("1+1", self.assignments))
-        self.equations.append(Equation("5*2", self.assignments))
-        self.equations.append(Equation("3+3**2+4", self.assignments))
-        self.equations.append(Equation("f(x):=2+x", self.assignments))
-        self.equations.append(Equation("y:=10", self.assignments))
+        self.equations.append(Equation("# Question 1:", self.assignments, theme_config=self.theme))
+        self.equations.append(Equation("1+1", self.assignments, theme_config=self.theme))
+        self.equations.append(Equation("5*2", self.assignments, theme_config=self.theme))
+        self.equations.append(Equation("3+3**2+4", self.assignments, theme_config=self.theme))
+        self.equations.append(Equation("f(x):=2+x", self.assignments, theme_config=self.theme))
+        self.equations.append(Equation("y:=10", self.assignments, theme_config=self.theme))
 
         for i in range(len(self.equations)):
             self.equations[i].create_equation(self.inner, delete_function=self.remove_equation)
