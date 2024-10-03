@@ -36,6 +36,7 @@ class MenuBar(tk.Menu):
 
         ## The histories that are currently in use in the application
         self.histories = histories
+        self.theme = theme_config
 
         self.filemenu = self.__create_filemenu()
 
@@ -94,4 +95,4 @@ class MenuBar(tk.Menu):
         event : tk.Event
          The event object
         """
-        Export = ExportWindow(self.histories[0])
+        Export = ExportWindow(self.histories[0], self.theme)
