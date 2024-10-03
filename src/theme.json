@@ -40,6 +40,16 @@
             75,
             71,
             69
+        ],
+        "other_button_background": [
+            142,
+            192,
+            124
+        ],
+        "other_button_text": [
+            60,
+            56,
+            54
         ]
     },
     "font": {
